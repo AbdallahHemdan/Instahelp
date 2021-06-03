@@ -1,11 +1,21 @@
 <template>
   <div class="profile">
-    <h1>This is a profile page</h1>
+    <!-- 
+      < profile header > 
+      < lower container> 
+      
+    -->
+    <profile-header></profile-header>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  components: {
+    "profile-header": () =>
+      import("./../components/ProfileHeader/ProfileHeader"),
+  },
+};
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
