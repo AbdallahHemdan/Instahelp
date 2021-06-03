@@ -19,13 +19,12 @@
 
         <div class="right-part custom-nav__options-list">
           <a
-            class="custom-nav__icon"
+            class="nav-link custom-nav__icon"
             v-for="(feature, index) in features"
             :key="index"
             :href="feature.href"
-            :title="feature.title"
           >
-            <img :src="feature.imgSrc" :alt="feature.title" />
+          {{ feature.title }}
           </a>
 
           <profile-dropdown></profile-dropdown>
@@ -43,17 +42,14 @@ export default {
         {
           href: '/',
           title: 'Home',
-          imgSrc: 'https://img.icons8.com/ios/30/000000/home.png',
         },
         {
-          href: '/explore',
-          title: 'Explore',
-          imgSrc: 'https://img.icons8.com/ios/30/000000/compass.png',
+          href: '/contact',
+          title: 'Contact Us',
         },
         {
-          href: '/inbox',
-          title: 'Chat',
-          imgSrc: 'https://img.icons8.com/ios/30/000000/sent.png',
+          href: '/about',
+          title: 'About Us',
         },
       ],
     }
