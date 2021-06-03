@@ -1,4 +1,4 @@
-# Instahelp
+# frontend
 
 ## Project setup
 ```
