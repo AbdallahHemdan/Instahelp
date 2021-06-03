@@ -1,20 +1,47 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/contact">contact</router-link> |
-      <router-link to="/error">404</router-link> |
-      <router-link to="/profile">profile</router-link> |
-      <router-link to="/login">login</router-link> |
-      <router-link to="/signup">signup</router-link>
-    </div>
-    <router-view />
+    <navbar v-if="!$route.meta.hideNavbar"></navbar>
+    <main class="container main">
+      <router-view />
+    </main>
   </div>
 </template>
 
 <script>
-export default {};
+import firebase from 'firebase'
+
+export default {
+  name: 'app',
+  data: function() {
+    return {
+      user: null,
+    }
+  },
+  components: {
+    navbar: () => import('./components/Navbar/Navbar'),
+  },
+  mounted: function() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user
+        localStorage.setItem('accessToken', user.uid)
+        localStorage.setItem('displayName', user.displayName)
+      } else {
+        this.user = null
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('displayName')
+      }
+    })
+  },
+}
 </script>
 
-<style></style>
+<style lang="scss">
+body {
+  background-color: $white-smoke;
+}
+
+.main {
+  margin-top: 92px;
+}
+</style>
