@@ -1,11 +1,13 @@
 <template>
-  <div class="home">
-    <h1>This is an about page</h1>
-  </div>
+  <div class="home"></div>
 </template>
 
 <script>
-export default {};
+import firebase from 'firebase'
+
+export default {
+  methods: {},
+}
 </script>
 
 <style scoped></style>
