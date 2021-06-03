@@ -21,15 +21,6 @@
         Profile
       </a>
 
-      <a class="dropdown-item" href="/profile/settings">
-        <img
-          src="./../../assets/svgs/settings.svg"
-          alt="settings icon"
-          class="profile-options__icon"
-        />
-        Settings
-      </a>
-
       <div class="logout">
         <a class="dropdown-item" href="/" @click="logout">
           <img
