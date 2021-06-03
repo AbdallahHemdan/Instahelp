@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import './plugins/axios'
+import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase'
