@@ -46,6 +46,17 @@ export const getQuestion = async id => {
   return questionData
 }
 
+/**
+ *
+ * @returns data of all the questions
+ */
+export const getAllQuestions = async () => {
+  const questions = await questionsCollection.get()
+  console.log('questions.docs: ', questions.docs)
+
+  return questions.docs
+}
+
 Vue.config.productionTip = false
 
 new Vue({

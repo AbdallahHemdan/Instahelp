@@ -47,6 +47,7 @@
 
 <script>
 import { addQuestion } from './../../main'
+import { getUserId } from './../../auth/index'
 
 export default {
   name: 'NewPost',
@@ -59,6 +60,9 @@ export default {
   methods: {
     updateTitle: function(e) {
       this.questionTitle = e.target.value
+
+      e.target.style.height = 'auto'
+      e.target.style.height = `${e.target.scrollHeight}px`
     },
     updateDescription: function(e) {
       this.questionDescription = e.target.value
@@ -71,6 +75,7 @@ export default {
       let question = {
         title: this.questionTitle,
         description,
+        userId: getUserId(),
       }
 
       addQuestion(question)
