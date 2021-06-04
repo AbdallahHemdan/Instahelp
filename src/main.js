@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase'
@@ -16,7 +15,49 @@ var firebaseConfig = {
   measurementId: 'G-S77KTGH0NG',
 }
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig)
+const firebaseApp = firebase.initializeApp(firebaseConfig)
+
+export const db = firebaseApp.firestore()
+const questionsCollection = db.collection('Questions')
+
+/**
+ * @description addQuestion - used to add a new question to the list
+ * @param {Object} data
+ * @returns {String} id
+ */
+export const addQuestion = question => {
+  let id = questionsCollection.add(question).then(doc => {
+    console.log('doc.id: ', doc.id)
+    return doc.id
+  })
+
+  return id
+}
+
+/**
+ *
+ * @param {string} id
+ * @returns data of the question
+ */
+export const getQuestion = async id => {
+  const question = await questionsCollection.doc(id).get()
+  let questionData = question.exists ? question.data() : null
+
+  return questionData
+}
+
+/**
+ *
+ * @returns data of all the questions
+ */
+export const getAllQuestions = async () => {
+  const questions = await questionsCollection.get()
+  console.log('questions.docs: ', questions.docs)
+
+  return questions.docs
+}
+
+Vue.config.productionTip = false
 
 new Vue({
   router,

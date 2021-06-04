@@ -46,6 +46,9 @@
 </template>
 
 <script>
+import { addQuestion } from './../../main'
+import { getUserId } from './../../auth/index'
+
 export default {
   name: 'NewPost',
   data: function() {
@@ -57,18 +60,38 @@ export default {
   methods: {
     updateTitle: function(e) {
       this.questionTitle = e.target.value
+
+      e.target.style.height = 'auto'
+      e.target.style.height = `${e.target.scrollHeight}px`
     },
     updateDescription: function(e) {
       this.questionDescription = e.target.value
+
+      e.target.style.height = 'auto'
+      e.target.style.height = `${e.target.scrollHeight}px`
     },
     postQuestion: function() {
-      console.log('LOL')
-      this.question = ''
+      let description = this.questionDescription.replace(/(?:\r\n|\r|\n)/g, '<br>')
+      let question = {
+        title: this.questionTitle,
+        description,
+        userId: getUserId(),
+      }
+
+      addQuestion(question)
+
+      this.questionTitle = ''
+      this.questionDescription = ''
     },
   },
-  props: {},
-  components: {},
-  computed: {},
+  mounted() {
+    /**
+     * Handle auto-resizing for text area of the question description
+     */
+    this.$nextTick(() => {
+      this.$el.setAttribute('style', 'height', `${this.$el.scrollHeight}px`)
+    })
+  },
 }
 </script>
 
@@ -248,7 +271,7 @@ hr {
 .question-description-area {
   width: 100%;
   border: none;
-  padding: 0 20px;
+  padding: 10px 20px;
   &:focus {
     outline: none;
   }

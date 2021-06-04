@@ -1,5 +1,9 @@
 const isLoggedIn = () => {
-  return localStorage.getItem('accessToken') ? true : false;
-};
+  return localStorage.getItem('accessToken') ? true : false
+}
 
-export { isLoggedIn };
+const getUserId = () => {
+  return localStorage.getItem('accessToken')
+}
+
+export { isLoggedIn, getUserId }

@@ -5,19 +5,23 @@
 </template>
 
 <script>
+import { getAllQuestions } from './../../main'
 export default {
   name: 'Newsfeed',
   data: function() {
     return {
-      posts: require('./../../mock/Home/Posts').default,
+      posts: getAllQuestions(),
       answers: require('./../../mock/Home/Answers').default,
-    };
+    }
   },
   methods: {},
   components: {
     post: () => import('./../Post/Post'),
   },
-};
+  mounted() {
+    console.log('lol: ', this.posts)
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>
