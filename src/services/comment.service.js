@@ -19,9 +19,11 @@ const addComment = comment => {
     question_id: comment.question_id
   }
 
-  return commentsCollection.add(commentData).then(doc => {
+  commentsCollection.add(commentData).then(doc => {
     addCommentToQuestion(doc.question_id, doc.id);
-    return doc.id;
+    commentsCollection.doc(doc.id).update({
+      comment_id: doc.id
+    })
   });
 };
 

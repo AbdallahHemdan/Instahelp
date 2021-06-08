@@ -26,6 +26,9 @@ const addUser = async userData => {
   };
 
   let userId = await usersCollection.add(user).then(doc => {
+    usersCollection.doc(doc.id).update({
+      user_id: doc.id
+    })
     return doc.id;
   });
 

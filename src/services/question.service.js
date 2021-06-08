@@ -22,8 +22,10 @@ const addQuestion = question => {
     date: new Date(),
   }
 
-  return questionsCollection.add(questionData).then(doc => {
-    return doc.id;
+  questionsCollection.add(questionData).then(doc => {
+    questionsCollection.doc(doc.id).update({
+      question_id: doc.id
+    })
   });
 };
 
@@ -43,7 +45,13 @@ const getQuestion = async id => {
  */
 const getAllQuestions = async () => {
   const questions = await questionsCollection.get();
-  return questions.docs;
+
+  let questionsData = []
+  questions.forEach(question => {
+    questionsData.push(question.data())
+  }) 
+
+  return questionsData;
 };
 
 /**
