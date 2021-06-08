@@ -6,13 +6,13 @@
 
         <div class="post__header">
           <div class="post__title">
-            <a href="/profile" class="post__owner align-middle">
+            <a :href="`/profile/${5}`" class="post__owner align-middle">
               <span>{{ post.creator }}</span>
               <span class="sub-title">{{ post.creatorSubTitle }}</span>
             </a>
           </div>
 
-          <div class="post__date">Asked: March 28, 2018</div>
+          <div class="post__date">{{ post.date }}</div>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
     </div>
 
     <post-action></post-action>
-    <div class="post__likes">78 likes</div>
+    <div class="post__likes">{{ post.likes }} likes</div>
     <hr />
     <post-answers :answers="answers"></post-answers>
   </div>

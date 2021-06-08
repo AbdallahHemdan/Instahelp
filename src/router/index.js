@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { isLoggedIn } from './../auth/index'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import { isLoggedIn } from './../auth/index';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -34,7 +34,7 @@ const routes = [
     },
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     name: 'Profile',
     component: () => import('./../views/Profile.vue'),
   },
@@ -62,23 +62,23 @@ const routes = [
       hideNavbar: true,
     },
   },
-]
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-})
+});
 
 router.beforeEach((to, from, next) => {
   if (to.name == 'Login' && isLoggedIn()) {
     next({
       path: '/',
-    })
+    });
   } else if (to.name == 'Signup' && isLoggedIn()) {
     next({
       path: '/',
-    })
+    });
   } else if (
     to.name != 'Login' &&
     to.name != 'Signup' &&
@@ -87,10 +87,10 @@ router.beforeEach((to, from, next) => {
   ) {
     next({
       path: '/login',
-    })
+    });
   } else {
-    next()
+    next();
   }
-})
+});
 
-export default router
+export default router;

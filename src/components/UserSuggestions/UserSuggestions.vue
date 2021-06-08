@@ -9,7 +9,7 @@
 
     <div class="footer">
       ALL RIGHTS RECEIVED
-      <a href="https://github.com/AbdallahHemdan" class="footer__link">HEMDAN</a> &copy; 2020
+      <a href="https://github.com/AbdallahHemdan" class="footer__link">INSTAHELP</a> &copy; 2021
     </div>
   </div>
 </template>

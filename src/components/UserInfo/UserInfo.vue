@@ -1,22 +1,29 @@
 <template>
   <div class="user-info">
     <img
-      src="./../../assets/me.jpg"
-      alt="Hemdan's profile image"
+      :src="userInfo.image"
+      alt="User's profile image"
       class="user-info__img"
       draggable="false"
     />
 
     <div class="user-names">
-      <div class="user-info__username">Abdallah Hemdan</div>
-      <span class="user-info__sub-name">Abdallah_Ahmed_Hemdan</span>
+      <div class="user-info__username">{{ userInfo.username }}</div>
+      <span class="user-info__sub-name">{{ userInfo.subtitle }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import { getUserInfo } from './../../utilities/user';
+
 export default {
   name: 'UserInfo',
+  computed: {
+    userInfo() {
+      return getUserInfo();
+    },
+  },
 };
 </script>
 
