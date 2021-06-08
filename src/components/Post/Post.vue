@@ -2,17 +2,17 @@
   <div class="post">
     <div class="post__upper">
       <div class="post__upper-left">
-        <img src="./../../assets/me.jpg" alt="owner" class="post__owner-img" draggable="false" />
+        <img :src="userInfo.image" alt="owner" class="post__owner-img" draggable="false" />
 
         <div class="post__header">
           <div class="post__title">
-            <a :href="`/profile/${5}`" class="post__owner align-middle">
-              <span>{{ post.creator }}</span>
-              <span class="sub-title">{{ post.creatorSubTitle }}</span>
+            <a :href="`/profile/${post.user_id}`" class="post__owner align-middle">
+              <span class="post__user-name">{{ userInfo.name }}</span>
+              <span class="sub-title">{{ userInfo.sub_title }}</span>
             </a>
           </div>
 
-          <div class="post__date">{{ post.date }}</div>
+          <div class="post__date">Asked: {{ post.date }}</div>
         </div>
       </div>
 
@@ -34,7 +34,9 @@
           <div class="modal-content">
             <div class="modal-body">
               <button class="post-modal-choice danger-choice">Unfollow</button>
-              <button class="post-modal-choice" v-if="showGotoPost">Go to post</button>
+              <button class="post-modal-choice" v-if="showGotoPost" @click="goToPostPage">
+                Go to post
+              </button>
               <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">Cancel</span>
               </button>
@@ -48,7 +50,17 @@
       <div class="main-question__upper">
         <img src="./../../assets/conversation.png" alt="question icon" class="question-icon" />
 
-        <span class="main-question__title">
+        <a
+          class="main-question__title-wrapper"
+          :href="`/question/${post.question_id}`"
+          v-if="showGotoPost"
+        >
+          <span class="main-question__title">
+            {{ post.title }}
+          </span>
+        </a>
+
+        <span class="main-question__title" v-else>
           {{ post.title }}
         </span>
       </div>
@@ -56,37 +68,74 @@
       <div class="main-question__lower" v-html="post.content"></div>
     </div>
 
-    <post-action></post-action>
-    <div class="post__likes">{{ post.likes }} likes</div>
-    <hr />
-    <post-answers :answers="answers"></post-answers>
+    <post-action
+      :id="post.question_id"
+      :likeAction="likePost"
+      :dislikeAction="dislikePost"
+    ></post-action>
+    <div class="post__likes">{{ votes }} likes</div>
+
+    <hr v-if="post && post.comments && post.comments.length" />
+
+    <post-answers :answers="post.comments" :id="post.question_id"></post-answers>
   </div>
 </template>
 
 <script>
+import { getUserData } from './../../services/user.service.js';
+import { likeQuestion, dislikeQuestion, getQuestionLikes } from './../../services/question.service';
+
 export default {
   name: 'Post',
   data: function() {
-    return {};
+    return {
+      userInfo: '',
+      votes: this.post.likes,
+    };
   },
-  methods: {},
+  methods: {
+    setUseInfo: function() {
+      getUserData(this.post.user_id).then(res => {
+        this.userInfo = res;
+      });
+    },
+    goToPostPage: function() {
+      window.location = `question/${this.post.question_id}`;
+    },
+    getUserData: function() {
+      this.setUseInfo();
+    },
+    likePost: function() {
+      likeQuestion(this.post.question_id);
+      this.votes++;
+    },
+    dislikePost: function() {
+      dislikeQuestion(this.post.question_id);
+      this.votes--;
+    },
+  },
   props: {
     post: {
       type: Object,
       required: true,
     },
-    answers: {
-      type: Array,
-      required: true,
-    },
     showGotoPost: {
       type: Boolean,
+      default: true,
     },
   },
   components: {
     'post-action': () => import('./../PostAction/PostAction'),
     'post-description': () => import('./../PostDescription/PostDescription'),
     'post-answers': () => import('./../Answers/Answers'),
+  },
+  mounted() {
+    this.getUserData();
+  },
+  watch: {
+    post(newVal, oldVal) {
+      this.getUserData();
+    },
   },
 };
 </script>
@@ -230,6 +279,13 @@ export default {
   margin-top: $spacing-3x;
 }
 
+.post__user-name {
+  margin-right: 8px;
+}
+
+.main-question__title-wrapper {
+  text-decoration: none;
+}
 hr {
   width: 80%;
 }

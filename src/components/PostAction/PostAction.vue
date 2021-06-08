@@ -25,22 +25,8 @@
           alt="comment"
           class="post-actions__icon"
           draggable="false"
+          @click="focusComment"
         />
-      </a>
-
-      <a class="post-actions__share">
-        <img
-          src="./../../assets/svgs/share.svg"
-          alt="share"
-          class="post-actions__icon"
-          draggable="false"
-        />
-      </a>
-    </div>
-
-    <div class="post-actions__right">
-      <a class="post-actions__save" @click="changeSaveState">
-        <img :src="savedImg" alt="saved" class="post-actions__icon" draggable="false" />
       </a>
     </div>
   </div>
@@ -54,47 +40,67 @@ export default {
       isUpVoted: false,
       isDownVoted: false,
       saved: false,
-    }
+    };
   },
   computed: {
     upImg: function() {
-      let liked = require('./../../assets/svgs/up-1.svg')
-      let unLiked = require('./../../assets/svgs/up-2.svg')
+      let liked = require('./../../assets/svgs/up-1.svg');
+      let unLiked = require('./../../assets/svgs/up-2.svg');
 
-      return this.isUpVoted ? liked : unLiked
+      return this.isUpVoted ? liked : unLiked;
     },
     downImg: function() {
-      let liked = require('./../../assets/svgs/down-1.svg')
-      let unLiked = require('./../../assets/svgs/down-2.svg')
+      let liked = require('./../../assets/svgs/down-1.svg');
+      let unLiked = require('./../../assets/svgs/down-2.svg');
 
-      return this.isDownVoted ? liked : unLiked
+      return this.isDownVoted ? liked : unLiked;
     },
     savedImg: function() {
-      let saved = require('./../../assets/svgs/saved.svg')
-      let unSaved = require('./../../assets/svgs/unsaved.svg')
-      return this.saved ? saved : unSaved
+      let saved = require('./../../assets/svgs/saved.svg');
+      let unSaved = require('./../../assets/svgs/unsaved.svg');
+      return this.saved ? saved : unSaved;
     },
+  },
+  props: {
+    id: '',
+    likeAction: '',
+    dislikeAction: '',
   },
   methods: {
     changeUpVotedState: function() {
-      this.isUpVoted = !this.isUpVoted
+      this.isUpVoted = !this.isUpVoted;
 
       if (this.isUpVoted) {
-        this.isDownVoted = false
+        this.isDownVoted = false;
+      }
+
+      if (this.isUpVoted) {
+        this.likeAction(this.id);
+      } else {
+        this.dislikeAction(this.id);
       }
     },
     changeDownVotedState: function() {
-      this.isDownVoted = !this.isDownVoted
+      this.isDownVoted = !this.isDownVoted;
 
       if (this.isDownVoted) {
-        this.isUpVoted = false
+        this.isUpVoted = false;
+      }
+
+      if (this.isDownVoted) {
+        this.dislikeAction(this.id);
+      } else {
+        this.likeAction(this.id);
       }
     },
     changeSaveState: function() {
-      this.saved = !this.saved
+      this.saved = !this.saved;
+    },
+    focusComment: function() {
+      console.log(this.$refs);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

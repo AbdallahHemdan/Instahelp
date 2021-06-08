@@ -15,7 +15,7 @@
       class="dropdown-menu dropdown-menu-right"
       aria-labelledby="dropdownMenuButton"
     >
-      <a class="dropdown-item" href="/profile/1">
+      <a class="dropdown-item" :href="`/profile/${userInfo.id}`">
         <img
           src="./../../assets/svgs/avatar.svg"
           alt="avatar image"
@@ -52,16 +52,22 @@ import { getUserInfo } from "./../../utilities/user";
 
 export default {
   name: "ProfileDropdown",
+  data: function() {
+    return {
+      userInfo: "",
+    };
+  },
   methods: {
     logout: function() {
       firebase.auth().signOut();
       window.localStorage.removeItem("accessToken");
     },
-  },
-  computed: {
-    userInfo() {
-      return getUserInfo();
+    setUserInfo: function() {
+      this.userInfo = getUserInfo();
     },
+  },
+  mounted() {
+    this.setUserInfo();
   },
 };
 </script>

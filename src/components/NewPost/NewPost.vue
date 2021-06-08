@@ -86,10 +86,10 @@ export default {
         tags: ['adel', 'hemdan'],
       };
 
-      addQuestion(question);
-
       this.questionTitle = '';
       this.questionDescription = '';
+
+      addQuestion(question);
     },
   },
   mounted() {
