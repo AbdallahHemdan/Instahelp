@@ -2,6 +2,8 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import firebase from 'firebase';
+
+import { AVATAR_URL } from './constants';
 import { firebaseConfig } from './config';
 
 Vue.config.productionTip = false;
@@ -21,13 +23,11 @@ const questionsCollection = db.collection('Questions');
  * @returns {String} id
  */
 export const addQuestion = question => {
-
   return questionsCollection.add(question).then(doc => {
-    console.log('doc.id: ', doc.id)
-    return doc.id
-  })
-}
-
+    console.log('doc.id: ', doc.id);
+    return doc.id;
+  });
+};
 
 /**
  *
@@ -35,10 +35,9 @@ export const addQuestion = question => {
  * @returns data of the question
  */
 export const getQuestion = async id => {
-
-  const question = await questionsCollection.doc(id).get()
-  return question.exists ? question.data() : null
-}
+  const question = await questionsCollection.doc(id).get();
+  return question.exists ? question.data() : null;
+};
 
 /**
  *
@@ -61,7 +60,7 @@ export const addUser = async userData => {
   let user = {
     email: userData.email,
     name: userData.name,
-    image_url: '',
+    image_url: AVATAR_URL,
     description: '',
     sub_title: '',
     user_id: '',
@@ -74,6 +73,7 @@ export const addUser = async userData => {
     return doc.id;
   });
 
+  localStorage.removeItem('user_id');
   localStorage.setItem('user_id', userId);
 };
 
@@ -83,48 +83,55 @@ export const addUser = async userData => {
  * @returns data of the user
  */
 export const getUserData = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return user.exists ? {
-    name: user.name,
-    description: user.description,
-    sub_title: user.sub_title,
-    image: user.image_id
-    } : null
-}
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        name: user.name,
+        description: user.description,
+        sub_title: user.sub_title,
+        image: user.image_id,
+      }
+    : null;
+};
 
 /**
  * @param {string} id
  * @returns followings ids
  */
- export const getFollowings = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return user.exists ? {
-    followings: user.followings,
-    } : null
-}
-
+export const getFollowings = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        followings: user.followings,
+      }
+    : null;
+};
 
 /**
  * @param {string} id
  * @returns followers ids
  */
- export const getFollowers = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return user.exists ? {
-    followers: user.followers,
-    } : null
-}
- 
+export const getFollowers = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        followers: user.followers,
+      }
+    : null;
+};
+
 /**
  * @param {string} id
  * @returns questions of the user
  */
- export const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return user.exists ? {
-    questions: user.questions,
-    } : null
-}
+export const getUserQuestions = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        questions: user.questions,
+      }
+    : null;
+};
 
 /**
  * @param {string} userId
@@ -133,19 +140,18 @@ export const getUserData = async id => {
  */
 export const updateImage = async (userId, image) => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL();
-}
-
+};
 
 /**
  * @description updateUserData - used to update a user data
  * @param {Object} userData
  * @returns {String} user_id
  */
-export const updateUserData = (userData) => {
-  return usersCollection.doc(userData.user_id).update(userData)
-}
+export const updateUserData = userData => {
+  return usersCollection.doc(userData.user_id).update(userData);
+};
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
