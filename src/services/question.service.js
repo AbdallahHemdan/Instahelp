@@ -22,8 +22,10 @@ const addQuestion = question => {
     date: new Date().toDateString(),
   };
 
-  return questionsCollection.add(questionData).then(doc => {
-    return doc.id;
+  questionsCollection.add(questionData).then(doc => {
+    questionsCollection.doc(doc.id).update({
+      question_id: doc.id,
+    });
   });
 };
 
@@ -41,9 +43,16 @@ const getQuestion = async id => {
  *
  * @returns data of all the questions
  */
+
 const getAllQuestions = async () => {
   const questions = await questionsCollection.get();
-  return questions.docs;
+
+  let questionsData = [];
+  questions.forEach(question => {
+    questionsData.push(question.data());
+  });
+
+  return questionsData;
 };
 
 /**
@@ -84,7 +93,7 @@ const addTagToQuestion = (questionId, tagId) => {
 const likeQuestion = questionId => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    likes: firebase.firestore.FieldValue + 1,
+    likes: firebase.firestore.FieldValue.increment(1),
   });
 };
 
@@ -95,7 +104,7 @@ const likeQuestion = questionId => {
 const dislikeQuestion = questionId => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    likes: firebase.firestore.FieldValue - 1,
+    likes: firebase.firestore.FieldValue.increment(-1),
   });
 };
 
