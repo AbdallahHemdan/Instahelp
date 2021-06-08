@@ -1,10 +1,27 @@
 <template>
   <div class="container-settings">
     <div class="white-card">
+      <input
+        type="file"
+        name="avatar"
+        id="avatar"
+        hidden
+        accept="image/png image/jpeg"
+        @change="changeProfileImage"
+      />
+      <div class="avatar-container">
+        <img
+          src="https://avatars.githubusercontent.com/u/43186742?v=4"
+          alt="avatar"
+          class="avatar-container__avatar"
+          @click="upload"
+        />
+        <p class="avatar-container__change-image" @click="upload">
+          change
+        </p>
+      </div>
       <div class="header">
-        <a href="/" class="header__link">
-          <h2 class="header__title">Edit your Accout</h2>
-        </a>
+        <h2 class="header__title">Edit your Account</h2>
 
         <p class="header__info">
           you can edit your profile information so people can know you better
@@ -38,7 +55,7 @@
             type="text"
             name="description"
             id="description"
-            rows="10"
+            rows="5"
             class="form-control"
             placeholder="description"
             v-model="description"
@@ -70,17 +87,25 @@ export default {
     update() {
       console.log(this.name, this.title, this.description);
     },
+    upload() {
+      document.getElementById("avatar").click();
+      console.log("uloading");
+    },
+    changeProfileImage(event) {
+      const fd = new FormData();
+      if (event.target.files[0]) {
+        fd.append("images", event.target.files[0], event.target.files[0].name);
+        console.log("2shtat");
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .container-settings {
-  text-align: center;
-}
-
-.container-settings {
   margin-top: 20px;
+  text-align: center;
 
   .white-card {
     background-color: $white;
@@ -88,12 +113,60 @@ export default {
     width: 80%;
     margin: 20px 10px 0px 10px;
     padding: 40px;
+    padding-bottom: 0px;
     margin: auto;
 
     @media (max-width: 992px) {
       margin: 14px auto;
     }
   }
+  .avatar-container {
+    width: 168px;
+    height: 168px;
+    border-radius: 50%;
+    margin: auto;
+
+    &__avatar {
+      width: 168px;
+      height: 168px;
+      border-radius: 50%;
+      background-color: $white;
+      border: 2px solid $light-gray;
+      padding: 4px;
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        width: 150px;
+        height: 150px;
+      }
+      @media (max-width: 576px) {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    &__change-image {
+      margin-top: -40px;
+      opacity: 0;
+      color: $main-color;
+      font-family: "Pacifico", cursive;
+      font-weight: 300;
+    }
+    @media (max-width: 768px) {
+      width: 150px;
+      height: 150px;
+    }
+    @media (max-width: 576px) {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+.avatar-container:hover .avatar-container__avatar {
+  opacity: 0.3;
+}
+.avatar-container:hover .avatar-container__change-image {
+  opacity: 1;
 }
 
 .submit-settings {
@@ -106,6 +179,7 @@ export default {
   color: $white;
   font-size: 20px;
 }
+
 .submit-settings:hover {
   background-color: $sub-color;
 }
