@@ -1,20 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import firebase from 'firebase'
-import { firebaseConfig } from './config'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import firebase from 'firebase';
 
-Vue.config.productionTip = false
+import { AVATAR_URL } from './constants';
+import { firebaseConfig } from './config';
 
+Vue.config.productionTip = false;
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig)
-const storage = firebaseApp.storage().ref()
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const storage = firebaseApp.storage().ref();
 
-export const db = firebaseApp.firestore()
+export const db = firebaseApp.firestore();
 
-const usersCollection = db.collection('Users')
-const questionsCollection = db.collection('Questions')
+const usersCollection = db.collection('Users');
+const questionsCollection = db.collection('Questions');
 
 /**
  * @description addQuestion - used to add a new question to the list
@@ -22,13 +23,11 @@ const questionsCollection = db.collection('Questions')
  * @returns {String} id
  */
 export const addQuestion = question => {
-  let id = questionsCollection.add(question).then(doc => {
-    console.log('doc.id: ', doc.id)
-    return doc.id
-  })
-
-  return id
-}
+  return questionsCollection.add(question).then(doc => {
+    console.log('doc.id: ', doc.id);
+    return doc.id;
+  });
+};
 
 /**
  *
@@ -36,44 +35,47 @@ export const addQuestion = question => {
  * @returns data of the question
  */
 export const getQuestion = async id => {
-  const question = await questionsCollection.doc(id).get()
-  let questionData = question.exists ? question.data() : null
-
-  return questionData
-}
+  const question = await questionsCollection.doc(id).get();
+  return question.exists ? question.data() : null;
+};
 
 /**
  *
  * @returns data of all the questions
  */
 export const getAllQuestions = async () => {
-  const questions = await questionsCollection.get()
-  console.log('questions.docs: ', questions.docs)
+  const questions = await questionsCollection.get();
+  console.log('questions.docs: ', questions.docs);
 
-  return questions.docs
-}
+  return questions.docs;
+};
 
 /**
  * @description addUser - used to add a new user to the list
  * @param {Object} userData
  * @returns {String} user_id
  */
-// TODO: Store the user data to the local storage after returning
- export const addUser = userData => {
+
+export const addUser = async userData => {
   let user = {
     email: userData.email,
     name: userData.name,
-    image_url: "",
-    description: "",
-    sub_title: "", 
-    user_id: "",
-    followings: [ ],
-    followers: [ ],
-    questions: [ ]  
-  }
+    image_url: AVATAR_URL,
+    description: '',
+    sub_title: '',
+    user_id: '',
+    followings: [],
+    followers: [],
+    questions: [],
+  };
 
-  return usersCollection.add(user).then(doc => { return doc.id })
-}
+  let userId = await usersCollection.add(user).then(doc => {
+    return doc.id;
+  });
+
+  localStorage.removeItem('user_id');
+  localStorage.setItem('user_id', userId);
+};
 
 /**
  *
@@ -81,74 +83,77 @@ export const getAllQuestions = async () => {
  * @returns data of the user
  */
 export const getUserData = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
-    name: user.name,
-    description: user.description,
-    sub_title: user.sub_title,
-    image: user.image_id
-    } : null
-}
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        name: user.name,
+        description: user.description,
+        sub_title: user.sub_title,
+        image: user.image_id,
+      }
+    : null;
+};
 
 /**
  * @param {string} id
  * @returns followings ids
  */
- export const getFollowings = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
-    followings: user.followings,
-    } : null
-}
+export const getFollowings = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        followings: user.followings,
+      }
+    : null;
+};
 
 /**
  * @param {string} id
  * @returns followers ids
  */
- export const getFollowers = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
-    followers: user.followers,
-    } : null
-}
+export const getFollowers = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        followers: user.followers,
+      }
+    : null;
+};
 
 /**
  * @param {string} id
  * @returns questions of the user
  */
- export const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
-    questions: user.questions,
-    } : null
-}
+export const getUserQuestions = async id => {
+  const user = await (await usersCollection.doc(id).get()).data();
+  return user.exists
+    ? {
+        questions: user.questions,
+      }
+    : null;
+};
 
 /**
  * @param {string} userId
  * @param {object} image
  * @returns {string} image url
  */
- export const updateImage = async (userId, image) => {
+export const updateImage = async (userId, image) => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL();
-}
-
+};
 
 /**
  * @description updateUserData - used to update a user data
  * @param {Object} userData
  * @returns {String} user_id
  */
-export const updateUserData = async (userData) => {
-  const questions = await questionsCollection.get()
-  console.log('questions.docs: ', questions.docs)
+export const updateUserData = userData => {
+  return usersCollection.doc(userData.user_id).update(userData);
+};
 
-  return questions.docs
-}
-
-
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');
