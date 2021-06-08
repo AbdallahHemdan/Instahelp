@@ -1,5 +1,5 @@
-import firebase from 'firebase'
-import { firebaseApp } from './../main'
+import firebase from 'firebase';
+import { firebaseApp } from './../main';
 
 const db = firebaseApp.firestore();
 
@@ -12,15 +12,15 @@ const questionsCollection = db.collection('Questions');
  */
 const addQuestion = question => {
   let questionData = {
-    question_id: "",
+    question_id: '',
     user_id: question.user_id,
     title: question.title,
     content: question.content,
     tags: question.tags,
     likes: 0,
-    comments: [ ],
-    date: new Date(),
-  }
+    comments: [],
+    date: new Date().toDateString(),
+  };
 
   return questionsCollection.add(questionData).then(doc => {
     return doc.id;
@@ -62,42 +62,42 @@ const updateQuestion = questionData => {
 const addCommentToQuestion = (questionId, commentId) => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    comments: firebase.firestore.FieldValue.arrayUnion(commentId)
-  })
-}
+    comments: firebase.firestore.FieldValue.arrayUnion(commentId),
+  });
+};
 
 /**
  * @description add tag - used to add a tag id to a question list of comments
  * @param {Object} questionId, tagId
  */
- const addTagToQuestion = (questionId, tagId) => {
+const addTagToQuestion = (questionId, tagId) => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    tags: firebase.firestore.FieldValue.arrayUnion(tagId)
-  })
-}
+    tags: firebase.firestore.FieldValue.arrayUnion(tagId),
+  });
+};
 
 /**
  * @description likeQuestion - used to increase the counter of likes
  * @param {Object} questionId
  */
- const likeQuestion = questionId => {
+const likeQuestion = questionId => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    likes: firebase.firestore.FieldValue + 1
-  })
-}
+    likes: firebase.firestore.FieldValue + 1,
+  });
+};
 
 /**
  * @description dislikeQuestion - used to decrease the counter of likes
  * @param {Object} questionId
  */
- const dislikeQuestion = questionId => {
+const dislikeQuestion = questionId => {
   let questionRef = questionsCollection.doc(questionId);
   questionRef.update({
-    likes: firebase.firestore.FieldValue - 1
-  })
-}
+    likes: firebase.firestore.FieldValue - 1,
+  });
+};
 
 /**
  * @description remove question
@@ -105,16 +105,16 @@ const addCommentToQuestion = (questionId, commentId) => {
  */
 const deleteQuestion = questionId => {
   questionsCollection.doc(questionId).delete();
-}
+};
 
 export {
-    addQuestion,
-    getQuestion,
-    getAllQuestions,
-    updateQuestion,
-    addCommentToQuestion,
-    addTagToQuestion,
-    likeQuestion,
-    dislikeQuestion,
-    deleteQuestion
-}
+  addQuestion,
+  getQuestion,
+  getAllQuestions,
+  updateQuestion,
+  addCommentToQuestion,
+  addTagToQuestion,
+  likeQuestion,
+  dislikeQuestion,
+  deleteQuestion,
+};

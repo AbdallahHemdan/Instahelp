@@ -1,4 +1,4 @@
-import { firebaseApp } from './../main'
+import { firebaseApp } from './../main';
 import { AVATAR_URL } from './../constants';
 
 const storage = firebaseApp.storage().ref();
@@ -14,15 +14,15 @@ const usersCollection = db.collection('Users');
  */
 const addUser = async userData => {
   let user = {
-      email: userData.email,
-      name: userData.name,
-      image_url: AVATAR_URL,
-      description: '',
-      sub_title: '',
-      user_id: '',
-      followings: [],
-      followers: [],
-      questions: [],
+    email: userData.email,
+    name: userData.name,
+    image_url: AVATAR_URL,
+    description: '',
+    sub_title: userData.name,
+    user_id: '',
+    followings: [],
+    followers: [],
+    questions: [],
   };
 
   let userId = await usersCollection.add(user).then(doc => {
@@ -30,9 +30,14 @@ const addUser = async userData => {
   });
 
   localStorage.removeItem('user_id');
+  localStorage.removeItem('user_image');
+  localStorage.removeItem('displayName');
+  localStorage.removeItem('user_subtitle');
+  localStorage.removeItem('user_description');
+
   localStorage.setItem('user_id', userId);
 };
-  
+
 /**
  *
  * @param {string} id
@@ -45,11 +50,11 @@ const getUserData = async id => {
         name: user.name,
         description: user.description,
         sub_title: user.sub_title,
-        image: user.image_id,
+        image: user.image_url,
       }
     : null;
 };
-  
+
 /**
  * @param {string} id
  * @returns followings ids
@@ -62,7 +67,7 @@ const getFollowings = async id => {
       }
     : null;
 };
-  
+
 /**
  * @param {string} id
  * @returns followers ids
@@ -75,7 +80,7 @@ const getFollowers = async id => {
       }
     : null;
 };
-  
+
 /**
  * @param {string} id
  * @returns questions of the user
@@ -88,7 +93,7 @@ const getUserQuestions = async id => {
       }
     : null;
 };
-  
+
 /**
  * @param {string} userId
  * @param {object} image
@@ -114,5 +119,5 @@ export {
   getFollowers,
   getUserQuestions,
   updateImage,
-  updateUserData
-}
+  updateUserData,
+};
