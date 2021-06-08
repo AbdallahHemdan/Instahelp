@@ -2,22 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import firebase from 'firebase'
+import { firebaseConfig } from './config'
 
 Vue.config.productionTip = false
 
-var firebaseConfig = {
-  apiKey: 'AIzaSyB586VuDIIUbo5PPV7txZeGCLnV8jC_h4o',
-  authDomain: 'instahelp-482a0.firebaseapp.com',
-  projectId: 'instahelp-482a0',
-  storageBucket: 'instahelp-482a0.appspot.com',
-  messagingSenderId: '666106337917',
-  appId: '1:666106337917:web:4a58d47bd8d596d5b1af14',
-  measurementId: 'G-S77KTGH0NG',
-}
+
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig)
+const storage = firebaseApp.storage().ref()
 
 export const db = firebaseApp.firestore()
+
+const usersCollection = db.collection('Users')
 const questionsCollection = db.collection('Questions')
 
 /**
@@ -56,6 +52,99 @@ export const getAllQuestions = async () => {
 
   return questions.docs
 }
+
+/**
+ * @description addUser - used to add a new user to the list
+ * @param {Object} userData
+ * @returns {String} user_id
+ */
+// TODO: Store the user data to the local storage after returning
+ export const addUser = userData => {
+  let user = {
+    email: userData.email,
+    name: userData.name,
+    image_url: "",
+    description: "",
+    sub_title: "", 
+    user_id: "",
+    followings: [ ],
+    followers: [ ],
+    questions: [ ]  
+  }
+
+  return usersCollection.add(user).then(doc => { return doc.id })
+}
+
+/**
+ *
+ * @param {string} id
+ * @returns data of the user
+ */
+export const getUserData = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return User.exists ? {
+    name: user.name,
+    description: user.description,
+    sub_title: user.sub_title,
+    image: user.image_id
+    } : null
+}
+
+/**
+ * @param {string} id
+ * @returns followings ids
+ */
+ export const getFollowings = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return User.exists ? {
+    followings: user.followings,
+    } : null
+}
+
+/**
+ * @param {string} id
+ * @returns followers ids
+ */
+ export const getFollowers = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return User.exists ? {
+    followers: user.followers,
+    } : null
+}
+
+/**
+ * @param {string} id
+ * @returns questions of the user
+ */
+ export const getUserQuestions = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return User.exists ? {
+    questions: user.questions,
+    } : null
+}
+
+/**
+ * @param {string} userId
+ * @param {object} image
+ * @returns {string} image url
+ */
+ export const updateImage = async (userId, image) => {
+  return (await storage.child(userId).put(image)).ref.getDownloadURL();
+}
+
+
+/**
+ * @description updateUserData - used to update a user data
+ * @param {Object} userData
+ * @returns {String} user_id
+ */
+export const updateUserData = async (userData) => {
+  const questions = await questionsCollection.get()
+  console.log('questions.docs: ', questions.docs)
+
+  return questions.docs
+}
+
 
 Vue.config.productionTip = false
 
