@@ -10,7 +10,7 @@ export default {
   name: 'Newsfeed',
   data: function() {
     return {
-      posts: getAllQuestions(),
+      posts: require('./../../mock/Home/Posts').default,
       answers: require('./../../mock/Home/Answers').default,
     }
   },

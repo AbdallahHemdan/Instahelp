@@ -42,7 +42,8 @@ export default {};
 <style lang="scss" scoped>
 .about {
   text-align: center;
-  padding-top: 80px;
+  padding: 20px 0 40px 0;
+
   &__title {
     font-size: 35px;
     font-weight: 700;

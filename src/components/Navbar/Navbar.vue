@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white custom-nav">
     <div class="container">
-      <a class="navbar-brand brand-name" href="/">Instanews</a>
+      <a class="navbar-brand brand-name" href="/">Instahelp</a>
       <button
         class="navbar-toggler"
         type="button"
