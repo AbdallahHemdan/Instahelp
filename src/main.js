@@ -22,12 +22,10 @@ const questionsCollection = db.collection('Questions')
  * @returns {String} id
  */
 export const addQuestion = question => {
-  let id = questionsCollection.add(question).then(doc => {
+  return questionsCollection.add(question).then(doc => {
     console.log('doc.id: ', doc.id)
     return doc.id
   })
-
-  return id
 }
 
 /**
@@ -37,9 +35,7 @@ export const addQuestion = question => {
  */
 export const getQuestion = async id => {
   const question = await questionsCollection.doc(id).get()
-  let questionData = question.exists ? question.data() : null
-
-  return questionData
+  return question.exists ? question.data() : null
 }
 
 /**
@@ -82,7 +78,7 @@ export const getAllQuestions = async () => {
  */
 export const getUserData = async id => {
   const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
+  return user.exists ? {
     name: user.name,
     description: user.description,
     sub_title: user.sub_title,
@@ -96,7 +92,7 @@ export const getUserData = async id => {
  */
  export const getFollowings = async id => {
   const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
+  return user.exists ? {
     followings: user.followings,
     } : null
 }
@@ -107,7 +103,7 @@ export const getUserData = async id => {
  */
  export const getFollowers = async id => {
   const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
+  return user.exists ? {
     followers: user.followers,
     } : null
 }
@@ -118,7 +114,7 @@ export const getUserData = async id => {
  */
  export const getUserQuestions = async id => {
   const user = await (await usersCollection.doc(id).get()).data()
-  return User.exists ? {
+  return user.exists ? {
     questions: user.questions,
     } : null
 }
@@ -132,19 +128,14 @@ export const getUserData = async id => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL();
 }
 
-
 /**
  * @description updateUserData - used to update a user data
  * @param {Object} userData
  * @returns {String} user_id
  */
-export const updateUserData = async (userData) => {
-  const questions = await questionsCollection.get()
-  console.log('questions.docs: ', questions.docs)
-
-  return questions.docs
+export const updateUserData = (userData) => {
+  return usersCollection.doc(userData.user_id).update(userData)
 }
-
 
 Vue.config.productionTip = false
 
