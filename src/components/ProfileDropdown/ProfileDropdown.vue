@@ -15,7 +15,7 @@
       class="dropdown-menu dropdown-menu-right"
       aria-labelledby="dropdownMenuButton"
     >
-      <a class="dropdown-item" href="/profile">
+      <a class="dropdown-item" href="/profile/1">
         <img
           src="./../../assets/svgs/avatar.svg"
           alt="avatar image"

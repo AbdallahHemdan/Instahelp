@@ -13,29 +13,28 @@ const usersCollection = db.collection('Users');
  * @returns {String} user_id
  */
 const addUser = async userData => {
-  let user = {
-    email: userData.email,
-    name: userData.name,
-    image_url: AVATAR_URL,
-    description: '',
-    sub_title: userData.name,
-    user_id: '',
-    followings: [],
-    followers: [],
-    questions: [],
-  };
+    let user = {
+        email: userData.email,
+        name: userData.name,
+        image_url: AVATAR_URL,
+        description: '',
+        sub_title: userData.name,
+        user_id: '',
+        followings: [],
+        followers: [],
+        questions: [],
+    };
 
-  let userId = await usersCollection.add(user).then(doc => {
-    return doc.id;
-  });
+    let userId = await usersCollection.add(user).then(doc => {
+        return doc.id;
+    });
 
-  localStorage.removeItem('user_id');
-  localStorage.removeItem('user_image');
-  localStorage.removeItem('displayName');
-  localStorage.removeItem('user_subtitle');
-  localStorage.removeItem('user_description');
-
-  localStorage.setItem('user_id', userId);
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_image');
+    localStorage.removeItem('displayName');
+    localStorage.removeItem('user_subtitle');
+    localStorage.removeItem('user_description');
+    localStorage.setItem('user_id', userId);
 };
 
 /**
@@ -44,15 +43,14 @@ const addUser = async userData => {
  * @returns data of the user
  */
 const getUserData = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        name: user.name,
-        description: user.description,
-        sub_title: user.sub_title,
-        image: user.image_url,
-      }
-    : null;
+    const user = await (await usersCollection.doc(id).get()).data();
+    return user ? {
+            name: user.name,
+            description: user.description,
+            sub_title: user.sub_title,
+            image: user.image_url,
+        } :
+        null;
 };
 
 /**
@@ -60,12 +58,11 @@ const getUserData = async id => {
  * @returns followings ids
  */
 const getFollowings = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        followings: user.followings,
-      }
-    : null;
+    const user = await (await usersCollection.doc(id).get()).data();
+    return user ? {
+            followings: user.followings,
+        } :
+        null;
 };
 
 /**
@@ -73,12 +70,11 @@ const getFollowings = async id => {
  * @returns followers ids
  */
 const getFollowers = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        followers: user.followers,
-      }
-    : null;
+    const user = await (await usersCollection.doc(id).get()).data();
+    return user ? {
+            followers: user.followers,
+        } :
+        null;
 };
 
 /**
@@ -86,12 +82,11 @@ const getFollowers = async id => {
  * @returns questions of the user
  */
 const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        questions: user.questions,
-      }
-    : null;
+    const user = await (await usersCollection.doc(id).get()).data();
+    return user ? {
+            questions: user.questions,
+        } :
+        null;
 };
 
 /**
@@ -99,8 +94,8 @@ const getUserQuestions = async id => {
  * @param {object} image
  * @returns {string} image url
  */
-const updateImage = async (userId, image) => {
-  return (await storage.child(userId).put(image)).ref.getDownloadURL();
+const updateImage = async(userId, image) => {
+    return (await storage.child(userId).put(image)).ref.getDownloadURL();
 };
 
 /**
@@ -109,15 +104,15 @@ const updateImage = async (userId, image) => {
  * @returns {String} user_id
  */
 const updateUserData = userData => {
-  return usersCollection.doc(userData.user_id).update(userData);
+    return usersCollection.doc(userData.user_id).update(userData);
 };
 
 export {
-  addUser,
-  getUserData,
-  getFollowings,
-  getFollowers,
-  getUserQuestions,
-  updateImage,
-  updateUserData,
+    addUser,
+    getUserData,
+    getFollowings,
+    getFollowers,
+    getUserQuestions,
+    updateImage,
+    updateUserData,
 };

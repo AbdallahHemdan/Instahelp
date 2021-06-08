@@ -122,6 +122,9 @@
 </template>
 
 <script>
+//import { getUserInfo, getUserId } from "../utilities/user";
+import { getUserData } from "../../services/user.service";
+import { getUserInfo, getUserId } from "../../utilities/user";
 export default {
   data: function() {
     return {
@@ -137,6 +140,9 @@ export default {
   methods: {
     follow: function(event) {
       this.followed = !this.followed;
+      /// console.log(getUserInfo, getUserId);
+      console.log(getUserId());
+      console.log(getUserData());
     },
   },
 };
