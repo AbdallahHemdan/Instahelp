@@ -18,9 +18,7 @@ export default {
   components: {
     post: () => import('./../Post/Post'),
   },
-  mounted() {
-    console.log('lol: ', this.posts)
-  },
+  mounted() {},
 }
 </script>
 

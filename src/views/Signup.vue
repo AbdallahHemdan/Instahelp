@@ -16,15 +16,27 @@
           </div>
 
           <div class="social">
-            <button type="button" class="btn btn-primary btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-primary btn-block social__btn"
+              @click="authWithFacebook"
+            >
               <span class="fa fa-facebook social__logo"></span>
               Login with facebook
             </button>
-            <button type="button" class="btn btn-dark btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-dark btn-block social__btn"
+              @click="authWithGithub"
+            >
               <span class="fa fa-github social__logo"></span>
               Login with github
             </button>
-            <button type="button" class="btn btn-danger btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-danger btn-block social__btn"
+              @click="authWithGoogle"
+            >
               <span class="fa fa-google social__logo"></span>
               Login with google
             </button>
