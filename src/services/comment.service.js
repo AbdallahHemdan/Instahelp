@@ -19,10 +19,8 @@ const addComment = comment => {
     username: comment.username,
   };
 
-  return commentsCollection.add(commentData).then(doc => {
-    console.log('doc.id: ', doc.id);
-    addCommentToQuestion(commentData.question_id, doc.id);
-    return doc.id;
+  commentsCollection.add(commentData).then(doc => {
+    addCommentToQuestion(doc.question_id, doc.id);
   });
 };
 
