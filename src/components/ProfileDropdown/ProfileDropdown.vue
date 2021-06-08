@@ -8,11 +8,7 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <img
-        src="./../../assets/me.jpg"
-        class="profile-options__img"
-        alt="profile"
-      />
+      <img :src="userInfo.image" class="profile-options__img" alt="profile" />
     </a>
 
     <div
@@ -52,6 +48,7 @@
 
 <script>
 import firebase from "firebase";
+import { getUserInfo } from "./../../utilities/user";
 
 export default {
   name: "ProfileDropdown",
@@ -59,6 +56,11 @@ export default {
     logout: function() {
       firebase.auth().signOut();
       window.localStorage.removeItem("accessToken");
+    },
+  },
+  computed: {
+    userInfo() {
+      return getUserInfo();
     },
   },
 };

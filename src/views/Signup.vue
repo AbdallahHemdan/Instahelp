@@ -16,15 +16,27 @@
           </div>
 
           <div class="social">
-            <button type="button" class="btn btn-primary btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-primary btn-block social__btn"
+              @click="authWithFacebook"
+            >
               <span class="fa fa-facebook social__logo"></span>
               Login with facebook
             </button>
-            <button type="button" class="btn btn-dark btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-dark btn-block social__btn"
+              @click="authWithGithub"
+            >
               <span class="fa fa-github social__logo"></span>
               Login with github
             </button>
-            <button type="button" class="btn btn-danger btn-block social__btn">
+            <button
+              type="button"
+              class="btn btn-danger btn-block social__btn"
+              @click="authWithGoogle"
+            >
               <span class="fa fa-google social__logo"></span>
               Login with google
             </button>
@@ -106,7 +118,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
+import { addUser } from './../services/user.service';
 
 export default {
   name: 'Signup',
@@ -117,7 +130,7 @@ export default {
       password: '',
       confirmPassword: '',
       errMessage: '',
-    }
+    };
   },
   components: {
     'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
@@ -126,12 +139,20 @@ export default {
   methods: {
     signup: function() {
       if (!this.username) {
-        this.errMessage = "Username can't be empty"
-        return
+        this.errMessage = "Username can't be empty";
+        return;
       } else if (this.password != this.confirmPassword) {
-        this.errMessage = 'The two passwords are not equal'
-        return
+        this.errMessage = 'The two passwords are not equal';
+        return;
       }
+
+      let userData = {
+        email: this.email,
+        name: this.username,
+      };
+
+      addUser(userData);
+
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
@@ -144,56 +165,56 @@ export default {
                   displayName: this.username,
                 })
                 .then(e => {
-                  window.location = '/'
-                })
+                  window.location = '/';
+                });
             }
           },
           err => {
-            console.log(err)
-            this.errMessage = err.message
+            console.log(err);
+            this.errMessage = err.message;
           },
-        )
+        );
     },
     authWithGoogle: function() {
-      const provider = new firebase.auth.GoogleAuthProvider()
+      const provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(res => {
-          window.location = '/'
+          window.location = '/';
         })
         .catch(err => {
-          alert('Oops. ' + err.message)
-        })
+          alert('Oops. ' + err.message);
+        });
     },
     authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider()
+      const provider = new firebase.auth.GithubAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(function(result) {
           // redirect to home page
-          window.location = '/'
+          window.location = '/';
         })
         .catch(function(error) {
-          alert('Oops. ' + error.message)
-        })
+          alert('Oops. ' + error.message);
+        });
     },
     authWithFacebook: function() {
-      const provider = new firebase.auth.FacebookAuthProvider()
+      const provider = new firebase.auth.FacebookAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(function(result) {
           // redirect to home page
-          window.location = '/'
+          window.location = '/';
         })
         .catch(function(error) {
-          alert('Oops. ' + error.message)
-        })
+          alert('Oops. ' + error.message);
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

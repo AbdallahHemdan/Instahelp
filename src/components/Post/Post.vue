@@ -6,13 +6,13 @@
 
         <div class="post__header">
           <div class="post__title">
-            <a href="/profile" class="post__owner align-middle">
+            <a :href="`/profile/${5}`" class="post__owner align-middle">
               <span>{{ post.creator }}</span>
               <span class="sub-title">{{ post.creatorSubTitle }}</span>
             </a>
           </div>
 
-          <div class="post__date">Asked: March 28, 2018</div>
+          <div class="post__date">{{ post.date }}</div>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
           <div class="modal-content">
             <div class="modal-body">
               <button class="post-modal-choice danger-choice">Unfollow</button>
-              <button class="post-modal-choice">Go to post</button>
+              <button class="post-modal-choice" v-if="showGotoPost">Go to post</button>
               <button class="post-modal-choice lst-choice" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">Cancel</span>
               </button>
@@ -53,11 +53,11 @@
         </span>
       </div>
 
-      <div class="main-question__lower" v-html="post.description"></div>
+      <div class="main-question__lower" v-html="post.content"></div>
     </div>
 
     <post-action></post-action>
-    <div class="post__likes">78 likes</div>
+    <div class="post__likes">{{ post.likes }} likes</div>
     <hr />
     <post-answers :answers="answers"></post-answers>
   </div>
@@ -67,7 +67,7 @@
 export default {
   name: 'Post',
   data: function() {
-    return {}
+    return {};
   },
   methods: {},
   props: {
@@ -79,13 +79,16 @@ export default {
       type: Array,
       required: true,
     },
+    showGotoPost: {
+      type: Boolean,
+    },
   },
   components: {
     'post-action': () => import('./../PostAction/PostAction'),
     'post-description': () => import('./../PostDescription/PostDescription'),
     'post-answers': () => import('./../Answers/Answers'),
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

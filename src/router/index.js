@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import { isLoggedIn } from './../auth/index'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import { isLoggedIn } from './../auth/index';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
@@ -11,10 +11,22 @@ const routes = [{
             import ('./../views/Home.vue'),
     },
     {
+        path: '/question/:id',
+        name: 'Question',
+        component: () =>
+            import ('./../views/Question.vue'),
+    },
+    {
         path: '/about',
         name: 'About',
         component: () =>
             import ('./../views/About.vue'),
+    },
+    {
+        path: '/settings',
+        name: 'Settings',
+        component: () =>
+            import ('./../views/Settings.vue'),
     },
     {
         path: '/contact',
@@ -32,16 +44,10 @@ const routes = [{
         },
     },
     {
-        path: '/profile',
+        path: '/profile/:id',
         name: 'Profile',
         component: () =>
             import ('./../views/Profile.vue'),
-    },
-    {
-        path: '/settings',
-        name: 'Settings',
-        component: () =>
-            import ('./../views/Settings.vue'),
     },
     {
         path: '/signup',
@@ -70,23 +76,23 @@ const routes = [{
             hideNavbar: true,
         },
     },
-]
+];
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
-})
+});
 
 router.beforeEach((to, from, next) => {
     if (to.name == 'Login' && isLoggedIn()) {
         next({
             path: '/',
-        })
+        });
     } else if (to.name == 'Signup' && isLoggedIn()) {
         next({
             path: '/',
-        })
+        });
     } else if (
         to.name != 'Login' &&
         to.name != 'Signup' &&
@@ -95,10 +101,10 @@ router.beforeEach((to, from, next) => {
     ) {
         next({
             path: '/login',
-        })
+        });
     } else {
-        next()
+        next();
     }
-})
+});
 
-export default router
+export default router;
