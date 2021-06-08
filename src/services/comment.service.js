@@ -13,7 +13,6 @@ const commentsCollection = db.collection('Comments');
  */
 const addComment = comment => {
   let commentData = {
-    comment_id: "",
     user_id: comment.user_id,
     content: comment.content,
     question_id: comment.question_id
@@ -21,9 +20,6 @@ const addComment = comment => {
 
   commentsCollection.add(commentData).then(doc => {
     addCommentToQuestion(doc.question_id, doc.id);
-    commentsCollection.doc(doc.id).update({
-      comment_id: doc.id
-    })
   });
 };
 
