@@ -5,7 +5,9 @@
 </template>
 
 <script>
-import { getQuestion, getUserData } from './../main';
+
+import { getQuestion } from './../services/question.service';
+import { getUserData } from './../services/user.service';
 
 export default {
   name: 'Question',

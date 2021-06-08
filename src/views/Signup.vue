@@ -119,7 +119,7 @@
 
 <script>
 import firebase from 'firebase';
-import { addUser } from './../main';
+import { addUser } from './../services/user.service';
 
 export default {
   name: 'Signup',
