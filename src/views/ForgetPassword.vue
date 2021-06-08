@@ -6,13 +6,13 @@
       <div class="right-col text-center">
         <div class="header">
           <a href="/" class="header__link">
-            <h2 class="header__title">Instanews</h2>
+            <h2 class="header__title">Instahelp</h2>
           </a>
 
           <img src="./../assets/lock.png" alt="lock" class="header__icon" draggable="false" />
 
           <p class="header__info">
-            Log In into Instanews to see photos and videos from your friends.
+            Log In into Instahelp to see photos and videos from your friends.
           </p>
         </div>
 

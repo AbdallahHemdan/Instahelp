@@ -1,20 +1,19 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import firebase from 'firebase'
-import { firebaseConfig } from './config'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import firebase from 'firebase';
+import { firebaseConfig } from './config';
 
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
 
 // Initialize Firebase
-const firebaseApp = firebase.initializeApp(firebaseConfig)
-const storage = firebaseApp.storage().ref()
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const storage = firebaseApp.storage().ref();
 
-export const db = firebaseApp.firestore()
+export const db = firebaseApp.firestore();
 
-const usersCollection = db.collection('Users')
-const questionsCollection = db.collection('Questions')
+const usersCollection = db.collection('Users');
+const questionsCollection = db.collection('Questions');
 
 /**
  * @description addQuestion - used to add a new question to the list
@@ -22,11 +21,13 @@ const questionsCollection = db.collection('Questions')
  * @returns {String} id
  */
 export const addQuestion = question => {
+
   return questionsCollection.add(question).then(doc => {
     console.log('doc.id: ', doc.id)
     return doc.id
   })
 }
+
 
 /**
  *
@@ -34,6 +35,7 @@ export const addQuestion = question => {
  * @returns data of the question
  */
 export const getQuestion = async id => {
+
   const question = await questionsCollection.doc(id).get()
   return question.exists ? question.data() : null
 }
@@ -43,33 +45,37 @@ export const getQuestion = async id => {
  * @returns data of all the questions
  */
 export const getAllQuestions = async () => {
-  const questions = await questionsCollection.get()
-  console.log('questions.docs: ', questions.docs)
+  const questions = await questionsCollection.get();
+  console.log('questions.docs: ', questions.docs);
 
-  return questions.docs
-}
+  return questions.docs;
+};
 
 /**
  * @description addUser - used to add a new user to the list
  * @param {Object} userData
  * @returns {String} user_id
  */
-// TODO: Store the user data to the local storage after returning
- export const addUser = userData => {
+
+export const addUser = async userData => {
   let user = {
     email: userData.email,
     name: userData.name,
-    image_url: "",
-    description: "",
-    sub_title: "", 
-    user_id: "",
-    followings: [ ],
-    followers: [ ],
-    questions: [ ]  
-  }
+    image_url: '',
+    description: '',
+    sub_title: '',
+    user_id: '',
+    followings: [],
+    followers: [],
+    questions: [],
+  };
 
-  return usersCollection.add(user).then(doc => { return doc.id })
-}
+  let userId = await usersCollection.add(user).then(doc => {
+    return doc.id;
+  });
+
+  localStorage.setItem('user_id', userId);
+};
 
 /**
  *
@@ -97,6 +103,7 @@ export const getUserData = async id => {
     } : null
 }
 
+
 /**
  * @param {string} id
  * @returns followers ids
@@ -107,7 +114,7 @@ export const getUserData = async id => {
     followers: user.followers,
     } : null
 }
-
+ 
 /**
  * @param {string} id
  * @returns questions of the user
@@ -124,9 +131,10 @@ export const getUserData = async id => {
  * @param {object} image
  * @returns {string} image url
  */
- export const updateImage = async (userId, image) => {
+export const updateImage = async (userId, image) => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL();
 }
+
 
 /**
  * @description updateUserData - used to update a user data
@@ -142,4 +150,4 @@ Vue.config.productionTip = false
 new Vue({
   router,
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');

@@ -10,7 +10,7 @@ export default {
   name: 'Newsfeed',
   data: function() {
     return {
-      posts: getAllQuestions(),
+      posts: require('./../../mock/Home/Posts').default,
       answers: require('./../../mock/Home/Answers').default,
     }
   },
@@ -18,9 +18,7 @@ export default {
   components: {
     post: () => import('./../Post/Post'),
   },
-  mounted() {
-    console.log('lol: ', this.posts)
-  },
+  mounted() {},
 }
 </script>
 
