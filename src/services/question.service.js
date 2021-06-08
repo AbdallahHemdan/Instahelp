@@ -1,4 +1,4 @@
-import { firebaseApp } from './../main'
+import { firebaseApp } from './../main';
 
 const db = firebaseApp.firestore();
 
@@ -10,8 +10,18 @@ const questionsCollection = db.collection('Questions');
  * @returns {String} id
  */
 const addQuestion = question => {
-  return questionsCollection.add(question).then(doc => {
-    console.log('doc.id: ', doc.id);
+  let questionData = {
+    question_id: '',
+    user_id: question.user_id,
+    title: question.title,
+    content: question.content,
+    tags: question.tags,
+    likes: 0,
+    comments: [],
+    date: new Date().toDateString(),
+  };
+
+  return questionsCollection.add(questionData).then(doc => {
     return doc.id;
   });
 };
@@ -32,13 +42,14 @@ const getQuestion = async id => {
  */
 const getAllQuestions = async () => {
   const questions = await questionsCollection.get();
-  console.log('questions.docs: ', questions.docs);
 
-  return questions.docs;
+  let questionsData = [];
+
+  questions.forEach(question => {
+    questionsData.push(question.data());
+  });
+
+  return questionsData;
 };
 
-export {
-    addQuestion,
-    getQuestion,
-    getAllQuestions
-}
+export { addQuestion, getQuestion, getAllQuestions };

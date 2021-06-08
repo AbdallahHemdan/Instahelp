@@ -2,13 +2,13 @@
   <div class="post">
     <div class="post__upper">
       <div class="post__upper-left">
-        <img src="./../../assets/me.jpg" alt="owner" class="post__owner-img" draggable="false" />
+        <img :src="userInfo.image" alt="owner" class="post__owner-img" draggable="false" />
 
         <div class="post__header">
           <div class="post__title">
-            <a href="/profile" class="post__owner align-middle">
-              <span>Hemdan</span>
-              <span class="sub-title"> Hemdan is super start </span>
+            <a :href="`/profile/${userInfo.id}`" class="post__owner align-middle">
+              <span>{{ userInfo.username }}</span>
+              <span class="sub-title"> {{ userInfo.subtitle }} </span>
             </a>
           </div>
         </div>
@@ -46,8 +46,9 @@
 </template>
 
 <script>
-import { addQuestion } from './../../main'
-import { getUserId } from './../../auth/index'
+import { getUserId } from './../../utilities/user';
+import { getUserInfo } from './../../utilities/user';
+import { addQuestion } from './../../services/question.service';
 
 export default {
   name: 'NewPost',
@@ -55,33 +56,40 @@ export default {
     return {
       questionTitle: '',
       questionDescription: '',
-    }
+    };
+  },
+  computed: {
+    userInfo() {
+      return getUserInfo();
+    },
   },
   methods: {
     updateTitle: function(e) {
-      this.questionTitle = e.target.value
+      this.questionTitle = e.target.value;
 
-      e.target.style.height = 'auto'
-      e.target.style.height = `${e.target.scrollHeight}px`
+      e.target.style.height = 'auto';
+      e.target.style.height = `${e.target.scrollHeight}px`;
     },
     updateDescription: function(e) {
-      this.questionDescription = e.target.value
+      this.questionDescription = e.target.value;
 
-      e.target.style.height = 'auto'
-      e.target.style.height = `${e.target.scrollHeight}px`
+      e.target.style.height = 'auto';
+      e.target.style.height = `${e.target.scrollHeight}px`;
     },
     postQuestion: function() {
-      let description = this.questionDescription.replace(/(?:\r\n|\r|\n)/g, '<br>')
+      let description = this.questionDescription.replace(/(?:\r\n|\r|\n)/g, '<br>');
+
       let question = {
         title: this.questionTitle,
-        description,
-        userId: getUserId(),
-      }
+        content: description,
+        user_id: getUserId(),
+        tags: ['adel', 'hemdan'],
+      };
 
-      addQuestion(question)
+      addQuestion(question);
 
-      this.questionTitle = ''
-      this.questionDescription = ''
+      this.questionTitle = '';
+      this.questionDescription = '';
     },
   },
   mounted() {
@@ -89,10 +97,10 @@ export default {
      * Handle auto-resizing for text area of the question description
      */
     this.$nextTick(() => {
-      this.$el.setAttribute('style', 'height', `${this.$el.scrollHeight}px`)
-    })
+      this.$el.setAttribute('style', 'height', `${this.$el.scrollHeight}px`);
+    });
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,25 +1,33 @@
 <template>
   <div class="newsfeed">
-    <post v-for="(post, index) in posts" :key="index" :post="post" :answers="answers"></post>
+    <post v-for="(post, index) in questions" :key="index" :post="post" :answers="answers"></post>
   </div>
 </template>
 
 <script>
-import { getAllQuestions } from './../../main'
+import { getAllQuestions } from './../../services/question.service';
+
 export default {
   name: 'Newsfeed',
   data: function() {
     return {
-      posts: require('./../../mock/Home/Posts').default,
       answers: require('./../../mock/Home/Answers').default,
-    }
+      questions: '',
+    };
   },
   methods: {},
   components: {
     post: () => import('./../Post/Post'),
   },
   mounted() {},
-}
+  computed: {
+    async posts() {
+      return getAllQuestions().then(res => {
+        this.questions = res;
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
