@@ -1,16 +1,10 @@
 <template>
   <div class="answer">
     <div class="answer__content">
-      <a href="/">
-        <span>{{ answer.owner }}</span>
+      <a :href="`/profile/${answer.user_id}`">
+        <span>{{ answer.username }}</span>
       </a>
-      {{ answer.answer }}
-    </div>
-
-    <div class="answer__like-action">
-      <a class="like-post">
-        <img :src="likedImg" class="icon" @click="changeLikeState" draggable="false" />
-      </a>
+      {{ answer.content }}
     </div>
   </div>
 </template>
@@ -21,28 +15,25 @@ export default {
   data: function() {
     return {
       liked: false,
-    }
+    };
   },
   props: {
-    answer: {
-      type: Object,
-      required: true,
-    },
+    answer: '',
   },
   computed: {
     likedImg: function() {
-      let liked = require('./../../assets/svgs/liked.svg')
-      let unLiked = require('./../../assets/svgs/unliked.svg')
+      let liked = require('./../../assets/svgs/liked.svg');
+      let unLiked = require('./../../assets/svgs/unliked.svg');
 
-      return this.liked ? liked : unLiked
+      return this.liked ? liked : unLiked;
     },
   },
   methods: {
     changeLikeState: function() {
-      this.liked = !this.liked
+      this.liked = !this.liked;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
