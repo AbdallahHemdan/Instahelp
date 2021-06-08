@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 export default {
   name: 'app',
   data: function() {
     return {
       user: null,
-    }
+    };
   },
   components: {
     navbar: () => import('./components/Navbar/Navbar'),
@@ -23,17 +23,18 @@ export default {
   mounted: function() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.user = user
-        localStorage.setItem('accessToken', user.uid)
-        localStorage.setItem('displayName', user.displayName)
+        this.user = user;
+        localStorage.setItem('accessToken', user.uid);
+        localStorage.setItem('displayName', user.displayName);
       } else {
-        this.user = null
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('displayName')
+        this.user = null;
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('displayName');
       }
-    })
+    });
   },
-}
+};
 </script>
 
 <style lang="scss">

@@ -8,7 +8,7 @@
       aria-haspopup="true"
       aria-expanded="false"
     >
-      <img src="./../../assets/me.jpg" class="profile-options__img" alt="profile" />
+      <img :src="userInfo.image" class="profile-options__img" alt="profile" />
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
@@ -36,17 +36,24 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
+import { getUserInfo } from './../../utilities/user';
 
 export default {
   name: 'ProfileDropdown',
+  data: {},
   methods: {
     logout: function() {
-      firebase.auth().signOut()
-      window.localStorage.removeItem('accessToken')
+      firebase.auth().signOut();
+      window.localStorage.removeItem('accessToken');
     },
   },
-}
+  computed: {
+    userInfo() {
+      return getUserInfo();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

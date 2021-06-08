@@ -62,7 +62,7 @@ export const addUser = async userData => {
     name: userData.name,
     image_url: AVATAR_URL,
     description: '',
-    sub_title: '',
+    sub_title: userData.name,
     user_id: '',
     followings: [],
     followers: [],
@@ -72,6 +72,8 @@ export const addUser = async userData => {
   let userId = await usersCollection.add(user).then(doc => {
     return doc.id;
   });
+
+  console.log('userId: ', userId);
 
   localStorage.removeItem('user_id');
   localStorage.setItem('user_id', userId);
@@ -84,12 +86,12 @@ export const addUser = async userData => {
  */
 export const getUserData = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user.exists
+  return user
     ? {
         name: user.name,
         description: user.description,
         sub_title: user.sub_title,
-        image: user.image_id,
+        image: user.image_url,
       }
     : null;
 };
@@ -100,7 +102,7 @@ export const getUserData = async id => {
  */
 export const getFollowings = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user.exists
+  return user
     ? {
         followings: user.followings,
       }
@@ -113,7 +115,7 @@ export const getFollowings = async id => {
  */
 export const getFollowers = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user.exists
+  return user
     ? {
         followers: user.followers,
       }
@@ -126,7 +128,7 @@ export const getFollowers = async id => {
  */
 export const getUserQuestions = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user.exists
+  return user
     ? {
         questions: user.questions,
       }

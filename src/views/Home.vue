@@ -12,17 +12,33 @@
 </template>
 
 <script>
+import { getUserData } from './../main';
+
 export default {
   name: 'Home',
   data: function() {
-    return {}
+    return {};
+  },
+  methods: {
+    setUserData() {
+      this.userId = localStorage.getItem('user_id');
+
+      getUserData(this.userId).then(data => {
+        localStorage.setItem('user_image', data.image);
+        localStorage.setItem('user_subtitle', data.sub_title);
+        localStorage.setItem('user_description', data.description);
+      });
+    },
   },
   components: {
     newsfeed: () => import('./../components/Newsfeed/Newsfeed'),
     'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
     'new-post': () => import('./../components/NewPost/NewPost'),
   },
-}
+  mounted() {
+    this.setUserData();
+  },
+};
 </script>
 
 <style lang="scss" scoped>

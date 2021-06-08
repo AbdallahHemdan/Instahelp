@@ -165,7 +165,7 @@ export default {
                   displayName: this.username,
                 })
                 .then(e => {
-                  window.location = '/';
+                  // window.location = '/';
                 });
             }
           },
