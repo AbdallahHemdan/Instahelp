@@ -21,13 +21,13 @@ const questionsCollection = db.collection('Questions');
  * @returns {String} id
  */
 export const addQuestion = question => {
-  let id = questionsCollection.add(question).then(doc => {
-    console.log('doc.id: ', doc.id);
-    return doc.id;
-  });
 
-  return id;
-};
+  return questionsCollection.add(question).then(doc => {
+    console.log('doc.id: ', doc.id)
+    return doc.id
+  })
+}
+
 
 /**
  *
@@ -35,11 +35,10 @@ export const addQuestion = question => {
  * @returns data of the question
  */
 export const getQuestion = async id => {
-  const question = await questionsCollection.doc(id).get();
-  let questionData = question.exists ? question.data() : null;
 
-  return questionData;
-};
+  const question = await questionsCollection.doc(id).get()
+  return question.exists ? question.data() : null
+}
 
 /**
  *
@@ -84,55 +83,48 @@ export const addUser = async userData => {
  * @returns data of the user
  */
 export const getUserData = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return User.exists
-    ? {
-        name: user.name,
-        description: user.description,
-        sub_title: user.sub_title,
-        image: user.image_id,
-      }
-    : null;
-};
+  const user = await (await usersCollection.doc(id).get()).data()
+  return user.exists ? {
+    name: user.name,
+    description: user.description,
+    sub_title: user.sub_title,
+    image: user.image_id
+    } : null
+}
 
 /**
  * @param {string} id
  * @returns followings ids
  */
-export const getFollowings = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return User.exists
-    ? {
-        followings: user.followings,
-      }
-    : null;
-};
+ export const getFollowings = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return user.exists ? {
+    followings: user.followings,
+    } : null
+}
+
 
 /**
  * @param {string} id
  * @returns followers ids
  */
-export const getFollowers = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return User.exists
-    ? {
-        followers: user.followers,
-      }
-    : null;
-};
-
+ export const getFollowers = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return user.exists ? {
+    followers: user.followers,
+    } : null
+}
+ 
 /**
  * @param {string} id
  * @returns questions of the user
  */
-export const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return User.exists
-    ? {
-        questions: user.questions,
-      }
-    : null;
-};
+ export const getUserQuestions = async id => {
+  const user = await (await usersCollection.doc(id).get()).data()
+  return user.exists ? {
+    questions: user.questions,
+    } : null
+}
 
 /**
  * @param {string} userId
@@ -141,21 +133,19 @@ export const getUserQuestions = async id => {
  */
 export const updateImage = async (userId, image) => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL();
-};
+}
+
 
 /**
  * @description updateUserData - used to update a user data
  * @param {Object} userData
  * @returns {String} user_id
  */
-export const updateUserData = async userData => {
-  const questions = await questionsCollection.get();
-  console.log('questions.docs: ', questions.docs);
+export const updateUserData = (userData) => {
+  return usersCollection.doc(userData.user_id).update(userData)
+}
 
-  return questions.docs;
-};
-
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,
