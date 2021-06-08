@@ -64,7 +64,7 @@
 
         <button
           type="submit"
-          class="btn  submit-settings"
+          class="btn btn-block submit-settings"
           @click.prevent="update"
         >
           update
@@ -118,7 +118,6 @@ export default {
 
     @media (max-width: 992px) {
       margin: 14px auto;
-      width: 100%;
     }
   }
   .avatar-container {
@@ -179,12 +178,6 @@ export default {
   background-color: $main-color;
   color: $white;
   font-size: 20px;
-}
-
-@media (max-width: 768px) {
-  .submit-settings {
-    width: 50%;
-  }
 }
 
 .submit-settings:hover {
