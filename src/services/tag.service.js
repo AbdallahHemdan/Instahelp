@@ -7,19 +7,54 @@ const db = firebaseApp.firestore();
 const tagsCollection = db.collection('Tags');
 
 /**
+ * @description putTags 
+ * @param {Object} tags names
+*/
+const putTags = async (tags, questionId) => {
+  for (const tag of tags) {
+    let findTag = await tagsCollection.where('tag_name', '==', tag).get();
+    if (findTag.docs.length) {
+      addQuestionToTag(findTag.data().tag_id, questionId);
+    } else {
+      addTag({
+        tag_name: tag,
+        description: '',
+        questions_ids: [ questionId ] 
+      })
+    }
+  }
+};
+
+/**
  * @description addTag 
  * @param {Object} tagData
- * @returns {String} id
 */
 const addTag = tag => {
   let tagData = {
+    tag_id: '',
+    tag_name: tag.name,
     description: tag.description,
-    questions_ids: tag.questions_ids
+    questions: tag.questions_ids
   }
 
   tagsCollection.add(tagData).then(doc => {
     addTagToQuestion(doc.question_id, doc.id);
+    tagsCollection.doc(doc.id).update({
+      tag_id: doc.id,
+    });
   });
+};
+
+/**
+ * @description add question - used to add a question id to a tag list of questions
+ * @param {Object} tagId, questionId
+ */
+const addQuestionToTag = (tagId, questionId) => {
+  let tagRef = tagsCollection.doc(tagId);
+  tagRef.update({
+    questions: firebase.firestore.FieldValue.arrayUnion(questionId),
+  });
+  addTagToQuestion(questionId, tagId);
 };
 
 /**
@@ -55,6 +90,8 @@ const getTags = async () => {
 
 export {
   addTag,
-  getTagsForQuestion,
+  putTags,
   getTags,
+  addQuestionToTag,
+  getTagsForQuestion,
 }

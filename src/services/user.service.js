@@ -124,12 +124,15 @@ const getFollowers = async id => {
  * @returns questions of the user
  */
 const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        questions: user.questions,
-      }
-    : null;
+  const questionsCollection = db.collection('Questions');
+  const questions = await questionsCollection.where('user_id', '==', id).get();
+  
+  let questionsData = [];
+  questions.forEach(doc => {
+    questionsData.push(doc.data());
+  })
+
+  return questionsData;
 };
 
 /**
