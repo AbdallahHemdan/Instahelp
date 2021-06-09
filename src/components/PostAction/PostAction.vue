@@ -96,9 +96,7 @@ export default {
     changeSaveState: function() {
       this.saved = !this.saved;
     },
-    focusComment: function() {
-      console.log(this.$refs);
-    },
+    focusComment: function() {},
   },
 };
 </script>

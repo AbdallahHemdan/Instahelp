@@ -2,7 +2,7 @@
   <div class="user-suggestions">
     <user-info></user-info>
 
-    <suggestion-header></suggestion-header>
+    <suggestion-header v-if="usersToSuggest.length"></suggestion-header>
 
     <single-suggestion v-for="(user, index) in usersToSuggest" :key="index" :user="user">
     </single-suggestion>
@@ -15,19 +15,31 @@
 </template>
 
 <script>
+import { getUserId } from './../../utilities/user';
+import { getSuggestions } from './../../services/suggestion.service';
+
 export default {
   name: 'UserSuggestions',
   data: function() {
     return {
-      usersToSuggest: require('./../../mock/Home/UserSuggestions').default,
+      usersToSuggest: '',
     };
   },
-  methods: {},
+  methods: {
+    setUserSuggestions: function() {
+      getSuggestions(getUserId(), 6).then(res => {
+        this.usersToSuggest = res;
+      });
+    },
+  },
   computed: {},
   components: {
     'user-info': () => import('./../UserInfo/UserInfo'),
     'suggestion-header': () => import('./../SuggestionHeader/SuggestionHeader'),
     'single-suggestion': () => import('./../SingleSuggestion/SingleSuggestion'),
+  },
+  mounted() {
+    this.setUserSuggestions();
   },
 };
 </script>
