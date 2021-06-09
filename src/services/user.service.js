@@ -52,6 +52,7 @@ const addUser = async userData => {
 const getUserData = async id => {
     const user = await (await usersCollection.doc(id).get()).data();
     return user ? {
+            user_id: user.user_id,
             name: user.name,
             description: user.description,
             sub_title: user.sub_title,
@@ -89,20 +90,30 @@ const getFollowers = async id => {
  * @returns questions of the user
  */
 const getUserQuestions = async id => {
-    const user = await (await usersCollection.doc(id).get()).data();
-    return user ? {
-            questions: user.questions,
-        } :
-        null;
-};
+    const questionsCollection = db.collection('Questions');
+    const questions = await questionsCollection.where('user_id', '==', id).get();
+    let questionsData = [];
+    questions.forEach(doc => {
 
+        questionsData.push(doc.data());
+
+    })
+    return questionsData;
+};
 /**
  * @param {string} userId
  * @param {object} image
  * @returns {string} image url
  */
 const updateImage = async(userId, image) => {
-    return (await storage.child(userId).put(image)).ref.getDownloadURL();
+    return (await storage.child(userId).put(image)).ref.getDownloadURL().then((url) => {
+        console.log(url);
+        usersCollection.doc(userId).update({
+            image_url: url
+        });
+        return url;
+    });
+
 };
 
 /**

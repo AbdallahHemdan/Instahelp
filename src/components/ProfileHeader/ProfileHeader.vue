@@ -11,16 +11,17 @@
           <title>
        -->
       <img
-        src="https://avatars.githubusercontent.com/u/43186742?v=4"
+        :src="this.userInfo.image"
         alt="avatar"
         class="title-container__avatar"
       />
 
       <div class="title-container__name">
         <div class="title-container__display-name">
-          Ahmed Mahboub
+          {{ this.userInfo.name }}
           <span>
             <button
+              v-if="this.myId !== this.userId"
               @mouseover="followHover = true"
               @mouseleave="followHover = false"
               v-on:click="follow"
@@ -32,19 +33,18 @@
           </span>
         </div>
         <div class="title-container__profitional-tital">
-          Software Engineer Stduent
+          {{ this.userInfo.sub_title }}
         </div>
       </div>
     </div>
 
     <div class="discritipon-container">
-      Computer Enginerring student interested in problem solveing and SDE. I am
-      actively looking for a Software Engineering-winter/summer 2021-internship.
+      {{ this.userInfo.description }}
     </div>
 
     <div class="nav-container">
       <div class="profile-posts nav-container__statistics-item">
-        <span class="bold">494</span> posts
+        <span class="bold">{{ this.listOfQuestions.length }}</span> questions
       </div>
 
       <div
@@ -52,7 +52,7 @@
         data-toggle="modal"
         data-target="#following"
       >
-        <span class="bold">40.8k</span> followers
+        <span class="bold">{{ this.listOfFollowers.length }}</span> followers
       </div>
 
       <div
@@ -73,7 +73,7 @@
 
             <div class="modal-body">
               <follow-item
-                v-for="(following, index) in listOfFollowers"
+                v-for="(following, index) in this.listOfFollowers"
                 :key="index"
                 :following="following"
               ></follow-item>
@@ -87,7 +87,7 @@
         data-toggle="modal"
         data-target="#followers"
       >
-        <span class="bold">1,708</span> following
+        <span class="bold">{{ this.listOfFollowing.length }}</span> following
       </div>
 
       <div
@@ -109,7 +109,7 @@
 
             <div class="modal-body">
               <follow-item
-                v-for="(following, index) in listOfFollowing"
+                v-for="(following, index) in this.listOfFollowing"
                 :key="index"
                 :following="following"
               ></follow-item>
@@ -123,13 +123,25 @@
 
 <script>
 //import { getUserInfo, getUserId } from "../utilities/user";
-import { getUserData } from "../../services/user.service";
+import {
+  getUserData,
+  getFollowers,
+  getFollowings,
+  getUserQuestions,
+  followUser,
+  unfollowUser,
+} from "../../services/user.service";
 import { getUserInfo, getUserId } from "../../utilities/user";
+
 export default {
   data: function() {
     return {
-      listOfFollowers: require("./../../mock/Profile/ListOfFollowers").default,
-      listOfFollowing: require("./../../mock/Profile/ListOfFollowers").default,
+      myId: getUserId(),
+      userId: window.location.pathname.split("/").pop(),
+      userInfo: "",
+      listOfFollowers: [],
+      listOfFollowing: [],
+      listOfQuestions: [],
       followed: false,
       followHover: false,
     };
@@ -138,12 +150,64 @@ export default {
     "follow-item": () => import("./../FollowItem/FollowItem"),
   },
   methods: {
-    follow: function(event) {
-      this.followed = !this.followed;
-      /// console.log(getUserInfo, getUserId);
-      console.log(getUserId());
-      console.log(getUserData());
+    setUseInfo: function() {
+      // general
+      getUserData(this.userId).then((res) => {
+        this.userInfo = res;
+      });
     },
+    setUserFollowers: function() {
+      getFollowers(this.userId).then((res) => {
+        res.followers.forEach((id) => {
+          getUserData(id).then((follower) => {
+            this.listOfFollowers.push(follower);
+          });
+        });
+      });
+    },
+    setUserFollowings: function() {
+      getFollowings(this.userId).then((res) => {
+        res.followings.forEach((id) => {
+          getUserData(id).then((following) => {
+            this.listOfFollowing.push(following);
+          });
+        });
+      });
+    },
+    setUserQuestions: function() {
+      getUserQuestions(this.userId).then((res) => {
+        this.listOfQuestions = res;
+      });
+      console.log(this.listOfQuestions);
+    },
+    setFollowStatus: function() {
+      if (this.myId !== this.userId) {
+        getFollowers(this.userId).then((res) => {
+          this.followed = res.followers.includes(this.myId);
+        });
+      }
+    },
+    getUserData: function() {
+      this.setUseInfo();
+    },
+
+    follow: function(event) {
+      if (this.followed) {
+        //unfollow
+        unfollowUser(this.myId, this.userId);
+      } else {
+        // follow
+        followUser(this.myId, this.userId);
+      }
+      this.followed = !this.followed;
+    },
+  },
+  mounted() {
+    this.getUserData();
+    this.setUserFollowers();
+    this.setUserFollowings();
+    this.setUserQuestions();
+    this.setFollowStatus();
   },
 };
 </script>

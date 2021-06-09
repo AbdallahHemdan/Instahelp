@@ -11,7 +11,7 @@
       />
       <div class="avatar-container">
         <img
-          src="https://avatars.githubusercontent.com/u/43186742?v=4"
+          :src="this.image"
           alt="avatar"
           class="avatar-container__avatar"
           @click="upload"
@@ -75,29 +75,70 @@
 </template>
 
 <script>
+import {
+  getUserData,
+  updateImage,
+  updateUserData,
+} from "../services/user.service";
+import { getUserInfo, getUserId } from "../utilities/user";
+
 export default {
   data() {
     return {
       name: "",
       title: "",
       description: "",
+      image: "",
+      myId: getUserId(),
     };
   },
   methods: {
+    setUseInfo: function() {
+      getUserData(this.myId).then((res) => {
+        this.name = res.name;
+        this.title = res.sub_title;
+        this.description = res.description;
+        this.image = localStorage.getItem("image_url");
+      });
+    },
+    getUserData: function() {
+      this.setUseInfo();
+    },
     update() {
-      console.log(this.name, this.title, this.description);
+      /**
+       * {
+       *  user_id:"",
+       *  name :"",
+       *  sub_title:"",
+       *  description:""
+       * }
+       */
+      let userData = {
+        user_id: this.myId,
+        name: this.name,
+        sub_title: this.title,
+        description: this.description,
+      };
+      // complete
+      updateUserData(userData).then((res) => {
+        // reload
+        window.location = window.location;
+      });
     },
     upload() {
       document.getElementById("avatar").click();
-      console.log("uloading");
     },
     changeProfileImage(event) {
-      const fd = new FormData();
       if (event.target.files[0]) {
-        fd.append("images", event.target.files[0], event.target.files[0].name);
-        console.log("2shtat");
+        updateImage(this.myId, event.target.files[0]).then((res) => {
+          localStorage.removeItem("image_url");
+          localStorage.setItem("image_url", res);
+        });
       }
     },
+  },
+  mounted() {
+    this.getUserData();
   },
 };
 </script>

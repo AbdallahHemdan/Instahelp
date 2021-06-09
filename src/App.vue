@@ -8,28 +8,28 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
-  name: 'app',
+  name: "app",
   data: function() {
     return {
       user: null,
     };
   },
   components: {
-    navbar: () => import('./components/Navbar/Navbar'),
+    navbar: () => import("./components/Navbar/Navbar"),
   },
   mounted: function() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user;
-        localStorage.setItem('accessToken', user.uid);
-        localStorage.setItem('displayName', user.displayName);
+        localStorage.setItem("accessToken", user.uid);
+        localStorage.setItem("displayName", user.displayName);
       } else {
         this.user = null;
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('displayName');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("displayName");
       }
     });
   },
