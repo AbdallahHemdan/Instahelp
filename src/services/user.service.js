@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { firebaseApp } from './../main';
 import { AVATAR_URL } from './../constants';
 
@@ -27,8 +28,8 @@ const addUser = async userData => {
 
     let userId = await usersCollection.add(user).then(doc => {
         usersCollection.doc(doc.id).update({
-            user_id: doc.id
-        })
+            user_id: doc.id,
+        });
         return doc.id;
     });
 
@@ -37,7 +38,10 @@ const addUser = async userData => {
     localStorage.removeItem('displayName');
     localStorage.removeItem('user_subtitle');
     localStorage.removeItem('user_description');
+
     localStorage.setItem('user_id', userId);
+
+    return userId;
 };
 
 /**
@@ -110,7 +114,43 @@ const updateUserData = userData => {
     return usersCollection.doc(userData.user_id).update(userData);
 };
 
-export {
+/**
+
+ * @description followUser
+ * @param {Object} userId, followingId
+
+ */
+const followUser = (userId, followingId) => {
+    let userRef = usersCollection.doc(userId);
+    userRef.update({
+        followings: firebase.firestore.FieldValue.arrayUnion(followingId),
+    });
+
+    let followingRef = usersCollection.doc(followingId);
+    followingRef.update({
+        followers: firebase.firestore.FieldValue.arrayUnion(userId),
+    });
+};
+
+/**
+ * @description unfollowUser
+ * @param {Object} userId, followingId
+ */
+const unfollowUser = (userId, followingId) => {
+    let userRef = usersCollection.doc(userId);
+    userRef.update({
+        followings: firebase.firestore.FieldValue.arrayRemove(followingId),
+    });
+
+    let followingRef = usersCollection.doc(followingId);
+    followingRef.update({
+        followers: firebase.firestore.FieldValue.arrayRemove(userId),
+    });
+};
+
+export { <<
+    <<
+    << < HEAD
     addUser,
     getUserData,
     getFollowings,
@@ -118,4 +158,18 @@ export {
     getUserQuestions,
     updateImage,
     updateUserData,
-};
+}; ===
+===
+=
+addUser,
+followUser,
+getUserData,
+updateImage,
+unfollowUser,
+getFollowers,
+getFollowings,
+updateUserData,
+getUserQuestions,
+}; >>>
+>>>
+> f7846f29826cd9fefde845c4b826d43e140488c8

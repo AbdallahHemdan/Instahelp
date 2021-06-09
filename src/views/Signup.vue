@@ -24,14 +24,14 @@
               <span class="fa fa-facebook social__logo"></span>
               Login with facebook
             </button>
-            <button
+            <!-- <button
               type="button"
               class="btn btn-dark btn-block social__btn"
               @click="authWithGithub"
             >
               <span class="fa fa-github social__logo"></span>
               Login with github
-            </button>
+            </button> -->
             <button
               type="button"
               class="btn btn-danger btn-block social__btn"
@@ -151,8 +151,6 @@ export default {
         name: this.username,
       };
 
-      addUser(userData);
-
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
@@ -165,7 +163,9 @@ export default {
                   displayName: this.username,
                 })
                 .then(e => {
-                  window.location = '/';
+                  addUser(userData).then(res => {
+                    window.location = '/';
+                  });
                 });
             }
           },
@@ -177,11 +177,19 @@ export default {
     },
     authWithGoogle: function() {
       const provider = new firebase.auth.GoogleAuthProvider();
+
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(res => {
-          window.location = '/';
+          let userData = {
+            email: res.user.email,
+            name: res.user.displayName,
+          };
+
+          addUser(userData).then(res => {
+            window.location = '/';
+          });
         })
         .catch(err => {
           alert('Oops. ' + err.message);
@@ -192,7 +200,7 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
+        .then(function(res) {
           // redirect to home page
           window.location = '/';
         })
@@ -205,9 +213,15 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
+        .then(function(res) {
+          let userData = {
+            email: res.user.email,
+            name: res.user.displayName,
+          };
+
+          addUser(userData).then(res => {
+            window.location = '/';
+          });
         })
         .catch(function(error) {
           alert('Oops. ' + error.message);
