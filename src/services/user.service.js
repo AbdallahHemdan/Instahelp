@@ -41,6 +41,12 @@ const addUser = async userData => {
 
   localStorage.setItem('user_id', userId);
 
+  await getUserData(userId).then(res => {
+    localStorage.setItem('user_image', res.image);
+    localStorage.setItem('user_subtitle', res.sub_title);
+    localStorage.setItem('user_description', res.description);
+  });
+
   return userId;
 };
 
@@ -48,7 +54,7 @@ const addUser = async userData => {
  * @description followUser
  * @param {Object} userId, followingId
  */
- const followUser = (userId, followingId) => {
+const followUser = (userId, followingId) => {
   let userRef = usersCollection.doc(userId);
   userRef.update({
     followings: firebase.firestore.FieldValue.arrayUnion(followingId),
@@ -64,7 +70,7 @@ const addUser = async userData => {
  * @description unfollowUser
  * @param {Object} userId, followingId
  */
- const unfollowUser = (userId, followingId) => {
+const unfollowUser = (userId, followingId) => {
   let userRef = usersCollection.doc(userId);
   userRef.update({
     followings: firebase.firestore.FieldValue.arrayRemove(followingId),
