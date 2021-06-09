@@ -182,8 +182,6 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(res => {
-          console.log('Google res: ', res.user);
-
           let userData = {
             email: res.user.email,
             name: res.user.displayName,

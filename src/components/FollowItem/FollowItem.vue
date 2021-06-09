@@ -1,12 +1,12 @@
 <template>
   <div class="follow-item">
-    <img :src="following.img" :alt="following.name + 'image'" class="follow-item__icon" />
+    <img :src="following.image_url" :alt="following.name + 'image'" class="follow-item__icon" />
 
     <div class="follow-item__right">
       <div class="follow-item__info">
         <div class="follow-item__username">{{ following.name }}</div>
         <div class="follow-item__nickname">
-          {{ following.nickName }}
+          {{ following.sub_title }}
         </div>
       </div>
 
