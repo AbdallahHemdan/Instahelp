@@ -96,6 +96,7 @@
 
 <script>
 import firebase from 'firebase';
+import { addUser, getUserByEmail } from './../services/user.service';
 
 export default {
   name: 'Login',
@@ -134,7 +135,34 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(res => {
-          window.location = '/';
+          getUserByEmail(res.user.email).then(user => {
+            console.log('user status: ', user);
+
+            if (!user) {
+              let userData = {
+                email: res.user.email,
+                name: res.user.displayName,
+              };
+              console.log('Not exists');
+
+              addUser(userData).then(res => {
+                window.location = '/';
+              });
+            } else {
+              console.log('Already exists');
+              localStorage.removeItem('user_id');
+              localStorage.removeItem('user_image');
+              localStorage.removeItem('displayName');
+              localStorage.removeItem('user_subtitle');
+              localStorage.removeItem('user_description');
+
+              localStorage.setItem('user_id', user.user_id);
+              localStorage.setItem('user_image', user.image_url);
+              localStorage.setItem('user_subtitle', user.sub_title);
+              localStorage.setItem('user_description', user.description);
+              window.location = '/';
+            }
+          });
         })
         .catch(err => {
           alert('Oops. ' + err.message);
@@ -158,9 +186,15 @@ export default {
       firebase
         .auth()
         .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
+        .then(function(res) {
+          let userData = {
+            email: res.user.email,
+            name: res.user.displayName,
+          };
+
+          addUser(userData).then(res => {
+            window.location = '/';
+          });
         })
         .catch(function(error) {
           alert('Oops. ' + error.message);

@@ -100,16 +100,29 @@ const getUserData = async id => {
 };
 
 /**
+ *
+ * @param {string} email
+ * @returns data of the user
+ */
+const getUserByEmail = async email => {
+  console.log('email: ', email);
+  const user = await usersCollection.where('email', '==', email).get();
+
+  let userInfo = null;
+  if (user.docs.length) {
+    userInfo = user.docs[0].data();
+  }
+
+  return userInfo;
+};
+
+/**
  * @param {string} id
  * @returns followings ids
  */
 const getFollowings = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        followings: user.followings,
-      }
-    : null;
+  return user ? user.data() : null;
 };
 
 /**
@@ -164,6 +177,7 @@ export {
   unfollowUser,
   getFollowers,
   getFollowings,
+  getUserByEmail,
   updateUserData,
   getUserQuestions,
 };
