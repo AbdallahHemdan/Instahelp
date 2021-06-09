@@ -68,20 +68,43 @@
       <div class="main-question__lower" v-html="post.content"></div>
     </div>
 
+    <div class="post__tags">
+      <span class="post__tags-title">
+        <img src="./../../assets/tag.png" alt="tag image" class="tag-image" />
+      </span>
+      <vue-tags-input
+        v-model="tag"
+        :tags="tags"
+        :disabled="true"
+        @tags-changed="newTags => (tags = newTags)"
+        @tag-clicked="onTagClicked"
+        placeholder=""
+        class="question__tags"
+      />
+    </div>
+
     <post-action
       :id="post.question_id"
       :likeAction="likePost"
       :dislikeAction="dislikePost"
     ></post-action>
-    <div class="post__likes">{{ votes }} likes</div>
+    <div class="post__likes">
+      <span>{{ votes }}</span> <span>likes</span>
+    </div>
 
     <hr v-if="post && post.comments && post.comments.length" />
 
-    <post-answers :answers="post.comments" :id="post.question_id"></post-answers>
+    <post-answers
+      :answers="post.comments"
+      :id="post.question_id"
+      v-if="showPostAnswers"
+      :forceRender="forceRender"
+    ></post-answers>
   </div>
 </template>
 
 <script>
+import VueTagsInput from '@johmun/vue-tags-input';
 import { getUserData } from './../../services/user.service.js';
 import { likeQuestion, dislikeQuestion } from './../../services/question.service';
 
@@ -91,6 +114,9 @@ export default {
     return {
       userInfo: '',
       votes: '',
+      tag: '',
+      tags: this.filterTags,
+      showPostAnswers: true,
     };
   },
   methods: {
@@ -103,7 +129,21 @@ export default {
       window.location = `question/${this.post.question_id}`;
     },
     getUserData: function() {
+      /**
+       * Add list of tags to post
+       */
+      let filtered = [];
+      let tags = this.post.tags;
+
+      tags.forEach(tag => {
+        filtered.push({
+          text: tag,
+        });
+      });
+
+      this.tags = filtered;
       this.votes = this.post.likes;
+
       this.setUseInfo();
     },
     likePost: function() {
@@ -113,6 +153,17 @@ export default {
     dislikePost: function() {
       dislikeQuestion(this.post.question_id);
       this.votes--;
+    },
+    onTagClicked: function(tag) {
+      const tagName = tag.tag.text;
+      window.location = `/tag/${tagName}`;
+    },
+    forceRender: function() {
+      this.showPostAnswers = false;
+
+      this.$nextTick().then(() => {
+        this.showPostAnswers = true;
+      });
     },
   },
   props: {
@@ -126,6 +177,7 @@ export default {
     },
   },
   components: {
+    VueTagsInput,
     'post-action': () => import('./../PostAction/PostAction'),
     'post-description': () => import('./../PostDescription/PostDescription'),
     'post-answers': () => import('./../Answers/Answers'),
@@ -141,7 +193,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .post {
   background: $white;
   margin-bottom: $spacing-4x;
@@ -195,8 +247,12 @@ export default {
   }
 
   &__likes {
-    padding-left: 1rem;
+    width: 70px;
+    display: flex;
     font-weight: 600;
+    align-items: center;
+    padding-left: 1rem;
+    justify-content: space-between;
   }
 }
 
@@ -287,7 +343,34 @@ export default {
 .main-question__title-wrapper {
   text-decoration: none;
 }
+
 hr {
   width: 80%;
+}
+
+.ti-actions {
+  display: none !important;
+}
+
+.question__tags {
+  padding: 1rem;
+}
+
+.post__tags {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.post__tags-title {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.tag-image {
+  width: 32px;
+  height: 32px;
 }
 </style>

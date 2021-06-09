@@ -35,9 +35,8 @@
         <vue-tags-input
           v-model="tag"
           :tags="tags"
-          :autocomplete-items="filteredItems"
-          placeholder="What is your question tags ?"
           @tags-changed="newTags => (tags = newTags)"
+          placeholder="What is your question tags ?"
           class="question__tags"
         />
       </form>
@@ -67,17 +66,14 @@ export default {
       questionDescription: '',
       tag: '',
       tags: [],
-      autocompleteItems: [],
     };
+  },
+  props: {
+    forceRender: '',
   },
   computed: {
     userInfo() {
       return getUserInfo();
-    },
-    filteredItems() {
-      return this.autocompleteItems.filter(i => {
-        return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
-      });
     },
   },
   components: {
@@ -99,17 +95,25 @@ export default {
     postQuestion: function() {
       let description = this.questionDescription.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+      let filteredTags = [];
+      this.tags.forEach(tag => {
+        filteredTags.push(tag.text);
+      });
+
       let question = {
         title: this.questionTitle,
         content: description,
         user_id: getUserId(),
-        tags: ['adel', 'hemdan'],
+        tags: filteredTags,
       };
 
+      this.tags = [];
       this.questionTitle = '';
       this.questionDescription = '';
 
-      addQuestion(question);
+      addQuestion(question).then(res => {
+        this.forceRender();
+      });
     },
   },
   mounted() {
@@ -269,7 +273,7 @@ hr {
 .question-title-area {
   width: 100%;
   border: none;
-  padding: 24px 20px 0;
+  padding: 24px 16px 0;
   resize: none;
   font-weight: bold;
 
@@ -299,7 +303,8 @@ hr {
 .question-description-area {
   width: 100%;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 16px;
+
   &:focus {
     outline: none;
   }
@@ -366,11 +371,11 @@ hr {
 }
 
 .vue-tags-input {
-  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .ti-tag {
-  background-color: $main-color !important;
-  padding: 4px !important;
+  background-color: #007bff !important;
+  padding: 4px 12px !important;
 }
 </style>
