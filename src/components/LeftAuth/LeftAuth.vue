@@ -17,19 +17,20 @@ export default {
         require('./../../assets/GIF/Auth/4.gif'),
         require('./../../assets/GIF/Auth/5.gif'),
       ],
-    }
+    };
   },
   created: function() {
     setInterval(() => {
-      this.counter = (this.counter + 1) % this.listOfImg.length
-    }, 3000)
+      const length = this.listOfImg.length;
+      this.counter = (this.counter + 1) % length;
+    }, 3000);
   },
   computed: {
     currentImg: function() {
-      return this.listOfImg[this.counter]
+      return this.listOfImg[this.counter];
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
