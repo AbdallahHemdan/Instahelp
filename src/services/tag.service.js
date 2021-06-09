@@ -34,7 +34,7 @@ const addTag = tag => {
     tag_id: '',
     tag_name: tag.name,
     description: tag.description,
-    questions: tag.questions_ids
+    questions_ids: tag.questions_ids
   }
 
   tagsCollection.add(tagData).then(doc => {
@@ -52,7 +52,7 @@ const addTag = tag => {
 const addQuestionToTag = (tagId, questionId) => {
   let tagRef = tagsCollection.doc(tagId);
   tagRef.update({
-    questions: firebase.firestore.FieldValue.arrayUnion(questionId),
+    questions_ids: firebase.firestore.FieldValue.arrayUnion(questionId),
   });
   addTagToQuestion(questionId, tagId);
 };
@@ -63,7 +63,7 @@ const addQuestionToTag = (tagId, questionId) => {
  * @returns {array} tags
 */
 const getTagsForQuestion = async questionId => {
-  const tags = await tagsCollection.where("question_id", "==", questionId).get();
+  const tags = await tagsCollection.where("questions_ids", 'array-contains', questionId).get();
   
   let tagsData = []
   tags.forEach(tag => {
