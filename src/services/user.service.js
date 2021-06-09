@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { firebaseApp } from './../main';
 import { AVATAR_URL } from './../constants';
 
@@ -27,8 +28,8 @@ const addUser = async userData => {
 
   let userId = await usersCollection.add(user).then(doc => {
     usersCollection.doc(doc.id).update({
-      user_id: doc.id
-    })
+      user_id: doc.id,
+    });
     return doc.id;
   });
 
@@ -39,6 +40,8 @@ const addUser = async userData => {
   localStorage.removeItem('user_description');
 
   localStorage.setItem('user_id', userId);
+
+  return userId;
 };
 
 /**
@@ -115,12 +118,48 @@ const updateUserData = userData => {
   return usersCollection.doc(userData.user_id).update(userData);
 };
 
+/**
+
+ * @description followUser
+ * @param {Object} userId, followingId
+
+ */
+const followUser = (userId, followingId) => {
+  let userRef = usersCollection.doc(userId);
+  userRef.update({
+    followings: firebase.firestore.FieldValue.arrayUnion(followingId),
+  });
+
+  let followingRef = usersCollection.doc(followingId);
+  followingRef.update({
+    followers: firebase.firestore.FieldValue.arrayUnion(userId),
+  });
+};
+
+/**
+ * @description unfollowUser
+ * @param {Object} userId, followingId
+ */
+const unfollowUser = (userId, followingId) => {
+  let userRef = usersCollection.doc(userId);
+  userRef.update({
+    followings: firebase.firestore.FieldValue.arrayRemove(followingId),
+  });
+
+  let followingRef = usersCollection.doc(followingId);
+  followingRef.update({
+    followers: firebase.firestore.FieldValue.arrayRemove(userId),
+  });
+};
+
 export {
   addUser,
+  followUser,
   getUserData,
-  getFollowings,
-  getFollowers,
-  getUserQuestions,
   updateImage,
+  unfollowUser,
+  getFollowers,
+  getFollowings,
   updateUserData,
+  getUserQuestions,
 };

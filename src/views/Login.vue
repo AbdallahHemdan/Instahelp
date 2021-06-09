@@ -24,10 +24,10 @@
             Login with facebook
           </button>
 
-          <button type="button" class="btn btn-dark btn-block social__btn" @click="authWithGithub">
+          <!-- <button type="button" class="btn btn-dark btn-block social__btn" @click="authWithGithub">
             <span class="fa fa-github social__logo"></span>
             Login with github
-          </button>
+          </button> -->
 
           <button
             type="button"
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 export default {
   name: 'Login',
@@ -104,7 +104,7 @@ export default {
       email: '',
       password: '',
       errMessage: '',
-    }
+    };
   },
   components: {
     'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
@@ -117,57 +117,57 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-            window.location = '/'
+            window.location = '/';
           },
           err => {
             if (err.code === 'auth/invalid-email') {
-              this.errMessage = err.message
+              this.errMessage = err.message;
             } else if (err.code === 'auth/wrong-password') {
-              this.errMessage = 'The password is invalid'
+              this.errMessage = 'The password is invalid';
             }
           },
-        )
+        );
     },
     authWithGoogle: function() {
-      const provider = new firebase.auth.GoogleAuthProvider()
+      const provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(res => {
-          window.location = '/'
+          window.location = '/';
         })
         .catch(err => {
-          alert('Oops. ' + err.message)
-        })
+          alert('Oops. ' + err.message);
+        });
     },
     authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider()
+      const provider = new firebase.auth.GithubAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(function(result) {
           // redirect to home page
-          window.location = '/'
+          window.location = '/';
         })
         .catch(function(error) {
-          alert('Oops. ' + error.message)
-        })
+          alert('Oops. ' + error.message);
+        });
     },
     authWithFacebook: function() {
-      const provider = new firebase.auth.FacebookAuthProvider()
+      const provider = new firebase.auth.FacebookAuthProvider();
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(function(result) {
           // redirect to home page
-          window.location = '/'
+          window.location = '/';
         })
         .catch(function(error) {
-          alert('Oops. ' + error.message)
-        })
+          alert('Oops. ' + error.message);
+        });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
