@@ -4,7 +4,7 @@ const getUserInfo = () => {
     image: localStorage.getItem('user_image'),
     username: localStorage.getItem('displayName'),
     subtitle: localStorage.getItem('user_subtitle'),
-    description: localStorage.getItem('user_description'),
+    description: localStorage.getItem('description'),
   };
 
   return userInfo;

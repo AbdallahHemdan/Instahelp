@@ -10,12 +10,7 @@
         @change="changeProfileImage"
       />
       <div class="avatar-container">
-        <img
-          :src="this.image"
-          alt="avatar"
-          class="avatar-container__avatar"
-          @click="upload"
-        />
+        <img :src="this.image" alt="avatar" class="avatar-container__avatar" @click="upload" />
         <p class="avatar-container__change-image" @click="upload">
           change
         </p>
@@ -66,6 +61,7 @@
           type="submit"
           class="btn  submit-settings"
           @click.prevent="update"
+          :disabled="!isImageReady"
         >
           update
         </button>
@@ -75,30 +71,27 @@
 </template>
 
 <script>
-import {
-  getUserData,
-  updateImage,
-  updateUserData,
-} from "../services/user.service";
-import { getUserInfo, getUserId } from "../utilities/user";
+import { getUserData, updateImage, updateUserData } from '../services/user.service';
+import { getUserInfo, getUserId } from '../utilities/user';
 
 export default {
   data() {
     return {
-      name: "",
-      title: "",
-      description: "",
-      image: "",
+      name: '',
+      title: '',
+      description: '',
+      image: '',
       myId: getUserId(),
+      isImageReady: true,
     };
   },
   methods: {
     setUseInfo: function() {
-      getUserData(this.myId).then((res) => {
+      getUserData(this.myId).then(res => {
         this.name = res.name;
         this.title = res.sub_title;
         this.description = res.description;
-        this.image = localStorage.getItem("image_url");
+        this.image = localStorage.getItem('user_image');
       });
     },
     getUserData: function() {
@@ -119,20 +112,30 @@ export default {
         sub_title: this.title,
         description: this.description,
       };
-      // complete
-      updateUserData(userData).then((res) => {
-        // reload
-        window.location = window.location;
+
+      localStorage.removeItem('displayName');
+      localStorage.removeItem('user_subtitle');
+      localStorage.removeItem('description');
+
+      updateUserData(userData).then(res => {
+        setTimeout(() => {
+          localStorage.setItem('description', userData.description);
+          localStorage.setItem('user_subtitle', userData.sub_title);
+          localStorage.setItem('displayName', userData.name);
+          window.location = window.location;
+        }, 500);
       });
     },
     upload() {
-      document.getElementById("avatar").click();
+      document.getElementById('avatar').click();
     },
     changeProfileImage(event) {
       if (event.target.files[0]) {
-        updateImage(this.myId, event.target.files[0]).then((res) => {
-          localStorage.removeItem("image_url");
-          localStorage.setItem("image_url", res);
+        this.isImageReady = false;
+        updateImage(this.myId, event.target.files[0]).then(res => {
+          localStorage.removeItem('user_image');
+          localStorage.setItem('user_image', res);
+          this.isImageReady = true;
         });
       }
     },
@@ -191,7 +194,7 @@ export default {
       margin-top: -40px;
       opacity: 0;
       color: $main-color;
-      font-family: "Pacifico", cursive;
+      font-family: 'Pacifico', cursive;
       font-weight: 300;
     }
     @media (max-width: 768px) {
@@ -244,7 +247,7 @@ export default {
 
 .header {
   &__title {
-    font-family: "Pacifico", cursive;
+    font-family: 'Pacifico', cursive;
     font-weight: 300;
     color: $main-color;
   }

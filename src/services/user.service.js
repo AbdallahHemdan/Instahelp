@@ -37,14 +37,14 @@ const addUser = async userData => {
   localStorage.removeItem('user_image');
   localStorage.removeItem('displayName');
   localStorage.removeItem('user_subtitle');
-  localStorage.removeItem('user_description');
+  localStorage.removeItem('description');
 
   localStorage.setItem('user_id', userId);
 
   await getUserData(userId).then(res => {
     localStorage.setItem('user_image', res.image);
     localStorage.setItem('user_subtitle', res.sub_title);
-    localStorage.setItem('user_description', res.description);
+    localStorage.setItem('description', res.description);
   });
 
   return userId;
@@ -122,7 +122,7 @@ const getUserByEmail = async email => {
  */
 const getFollowings = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user ? user.data() : null;
+  return user ? { followings: user.followings } : null;
 };
 
 /**

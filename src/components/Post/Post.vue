@@ -253,6 +253,7 @@ export default {
     align-items: center;
     padding-left: 1rem;
     justify-content: space-between;
+    padding-bottom: 20px;
   }
 }
 
@@ -319,6 +320,7 @@ export default {
 .main-question__upper {
   display: flex;
   align-items: center;
+  overflow-wrap: anywhere;
 }
 
 .question-icon {
@@ -334,6 +336,7 @@ export default {
 
 .main-question__lower {
   margin-top: $spacing-3x;
+  overflow-wrap: anywhere;
 }
 
 .post__user-name {
@@ -372,5 +375,23 @@ hr {
 .tag-image {
   width: 32px;
   height: 32px;
+}
+
+.ti-input {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.ti-new-tag-input-wrapper {
+  padding: 0 !important;
+}
+
+.vue-tags-input {
+  max-width: 100% !important;
+}
+
+.ti-tag {
+  background-color: #007bff !important;
+  padding: 4px 12px !important;
 }
 </style>

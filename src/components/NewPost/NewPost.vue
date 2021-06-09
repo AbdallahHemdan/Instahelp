@@ -249,6 +249,7 @@ export default {
 .main-question__upper {
   display: flex;
   align-items: center;
+  overflow-wrap: anywhere;
 }
 
 .question-icon {
@@ -264,6 +265,7 @@ export default {
 
 .main-question__lower {
   margin-top: $spacing-3x;
+  overflow-wrap: anywhere;
 }
 
 hr {
@@ -377,5 +379,9 @@ hr {
 .ti-tag {
   background-color: #007bff !important;
   padding: 4px 12px !important;
+}
+
+.ti-tags {
+  overflow-wrap: anywhere;
 }
 </style>
