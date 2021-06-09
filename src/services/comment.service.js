@@ -42,7 +42,7 @@ const getComments = async questionId => {
       },
     );
 
-  const comments = await commentsCollection.where('question_id', '==', questionId).orderBy('timestamp').get();
+  const comments = await commentsCollection.where('question_id', '==', questionId).orderBy('timestamp', 'desc').get();
 
   let commentsData = [];
   comments.forEach(comment => {
