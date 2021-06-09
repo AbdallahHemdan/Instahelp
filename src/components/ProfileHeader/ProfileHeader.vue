@@ -38,8 +38,8 @@
     </div>
 
     <div class="discritipon-container">
-      Computer Enginerring student interested in problem solveing and SDE. I am
-      actively looking for a Software Engineering-winter/summer 2021-internship.
+      Computer Enginerring student interested in problem solveing and SDE. I am actively looking for
+      a Software Engineering-winter/summer 2021-internship.
     </div>
 
     <div class="nav-container">
@@ -125,14 +125,12 @@
 export default {
   data: function() {
     return {
-      listOfFollowers: require("./../../mock/Profile/ListOfFollowers").default,
-      listOfFollowing: require("./../../mock/Profile/ListOfFollowers").default,
       followed: false,
       followHover: false,
     };
   },
   components: {
-    "follow-item": () => import("./../FollowItem/FollowItem"),
+    'follow-item': () => import('./../FollowItem/FollowItem'),
   },
   methods: {
     follow: function(event) {

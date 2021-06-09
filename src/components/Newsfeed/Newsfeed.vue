@@ -16,7 +16,6 @@ export default {
   name: 'Newsfeed',
   data: function() {
     return {
-      answers: require('./../../mock/Home/Answers').default,
       questions: '',
     };
   },
