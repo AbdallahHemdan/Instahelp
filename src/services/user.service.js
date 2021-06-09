@@ -45,6 +45,38 @@ const addUser = async userData => {
 };
 
 /**
+ * @description followUser
+ * @param {Object} userId, followingId
+ */
+ const followUser = (userId, followingId) => {
+  let userRef = usersCollection.doc(userId);
+  userRef.update({
+    followings: firebase.firestore.FieldValue.arrayUnion(followingId),
+  });
+
+  let followingRef = usersCollection.doc(followingId);
+  followingRef.update({
+    followers: firebase.firestore.FieldValue.arrayUnion(userId),
+  });
+};
+
+/**
+ * @description unfollowUser
+ * @param {Object} userId, followingId
+ */
+ const unfollowUser = (userId, followingId) => {
+  let userRef = usersCollection.doc(userId);
+  userRef.update({
+    followings: firebase.firestore.FieldValue.arrayRemove(followingId),
+  });
+
+  let followingRef = usersCollection.doc(followingId);
+  followingRef.update({
+    followers: firebase.firestore.FieldValue.arrayRemove(userId),
+  });
+};
+
+/**
  *
  * @param {string} id
  * @returns data of the user
@@ -116,40 +148,6 @@ const updateImage = async (userId, image) => {
  */
 const updateUserData = userData => {
   return usersCollection.doc(userData.user_id).update(userData);
-};
-
-/**
-
- * @description followUser
- * @param {Object} userId, followingId
-
- */
-const followUser = (userId, followingId) => {
-  let userRef = usersCollection.doc(userId);
-  userRef.update({
-    followings: firebase.firestore.FieldValue.arrayUnion(followingId),
-  });
-
-  let followingRef = usersCollection.doc(followingId);
-  followingRef.update({
-    followers: firebase.firestore.FieldValue.arrayUnion(userId),
-  });
-};
-
-/**
- * @description unfollowUser
- * @param {Object} userId, followingId
- */
-const unfollowUser = (userId, followingId) => {
-  let userRef = usersCollection.doc(userId);
-  userRef.update({
-    followings: firebase.firestore.FieldValue.arrayRemove(followingId),
-  });
-
-  let followingRef = usersCollection.doc(followingId);
-  followingRef.update({
-    followers: firebase.firestore.FieldValue.arrayRemove(userId),
-  });
 };
 
 export {
