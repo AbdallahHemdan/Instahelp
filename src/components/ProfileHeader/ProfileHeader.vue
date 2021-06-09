@@ -1,16 +1,7 @@
 <template>
   <div class="container">
-    <!-- 
-       <titleContainer > 
-       <discriptipnContainer >
-       <naveContainer >
-    -->
     <div class="title-container">
-      <!-- 
-          <image> 
-          <title>
-       -->
-      <img :src="this.userInfo.image" alt="avatar" class="title-container__avatar" />
+      <img :src="this.userInfo.image" class="title-container__avatar" />
 
       <div class="title-container__name">
         <div class="title-container__display-name">
@@ -154,6 +145,7 @@ export default {
     },
     setUserFollowers: function() {
       getFollowers(this.userId).then(res => {
+        console.log('res: ', res);
         res.followers.forEach(id => {
           getUserData(id).then(follower => {
             this.listOfFollowers.push(follower);
@@ -210,8 +202,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  margin-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 2px solid $light-gray;
 }
 .title-container {
   display: flex;
@@ -238,6 +230,10 @@ export default {
   &__name {
     padding-left: 2rem;
     padding-top: 50px;
+
+    @media (max-width: 768px) {
+      padding-left: 0;
+    }
   }
 
   &__display-name {
