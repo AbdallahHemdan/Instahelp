@@ -32,6 +32,13 @@
           :value="questionDescription"
           @input="updateDescription"
         ></textarea>
+        <vue-tags-input
+          v-model="tag"
+          :tags="tags"
+          @tags-changed="newTags => (tags = newTags)"
+          placeholder="What is your question tags ?"
+          class="question__tags"
+        />
       </form>
       <button
         type="submit"
@@ -49,6 +56,7 @@
 import { getUserId } from './../../utilities/user';
 import { getUserInfo } from './../../utilities/user';
 import { addQuestion } from './../../services/question.service';
+import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
   name: 'NewPost',
@@ -56,12 +64,20 @@ export default {
     return {
       questionTitle: '',
       questionDescription: '',
+      tag: '',
+      tags: [],
     };
+  },
+  props: {
+    forceRender: '',
   },
   computed: {
     userInfo() {
       return getUserInfo();
     },
+  },
+  components: {
+    VueTagsInput,
   },
   methods: {
     updateTitle: function(e) {
@@ -79,17 +95,25 @@ export default {
     postQuestion: function() {
       let description = this.questionDescription.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+      let filteredTags = [];
+      this.tags.forEach(tag => {
+        filteredTags.push(tag.text);
+      });
+
       let question = {
         title: this.questionTitle,
         content: description,
         user_id: getUserId(),
-        tags: ['adel', 'hemdan'],
+        tags: filteredTags,
       };
 
+      this.tags = [];
       this.questionTitle = '';
       this.questionDescription = '';
 
-      addQuestion(question);
+      addQuestion(question).then(res => {
+        this.forceRender();
+      });
     },
   },
   mounted() {
@@ -103,7 +127,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .post {
   background: $white;
   margin-bottom: $spacing-4x;
@@ -249,7 +273,7 @@ hr {
 .question-title-area {
   width: 100%;
   border: none;
-  padding: 24px 20px 0;
+  padding: 24px 16px 0;
   resize: none;
   font-weight: bold;
 
@@ -279,7 +303,8 @@ hr {
 .question-description-area {
   width: 100%;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 16px;
+
   &:focus {
     outline: none;
   }
@@ -328,5 +353,29 @@ hr {
 
 .create-post-form {
   width: 100%;
+}
+
+.question__tags {
+  width: 100%;
+  border: none;
+  padding: 10px 20px;
+}
+
+.ti-input {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.ti-new-tag-input-wrapper {
+  padding: 0 !important;
+}
+
+.vue-tags-input {
+  max-width: 100% !important;
+}
+
+.ti-tag {
+  background-color: #007bff !important;
+  padding: 4px 12px !important;
 }
 </style>

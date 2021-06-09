@@ -43,5 +43,9 @@ body {
 
 .main {
   margin-top: 92px;
+
+  @media (max-width: 992px) {
+    margin-top: 0;
+  }
 }
 </style>

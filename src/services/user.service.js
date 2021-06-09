@@ -41,6 +41,12 @@ const addUser = async userData => {
 
   localStorage.setItem('user_id', userId);
 
+  await getUserData(userId).then(res => {
+    localStorage.setItem('user_image', res.image);
+    localStorage.setItem('user_subtitle', res.sub_title);
+    localStorage.setItem('user_description', res.description);
+  });
+
   return userId;
 };
 
@@ -48,7 +54,7 @@ const addUser = async userData => {
  * @description followUser
  * @param {Object} userId, followingId
  */
- const followUser = (userId, followingId) => {
+const followUser = (userId, followingId) => {
   let userRef = usersCollection.doc(userId);
   userRef.update({
     followings: firebase.firestore.FieldValue.arrayUnion(followingId),
@@ -64,7 +70,7 @@ const addUser = async userData => {
  * @description unfollowUser
  * @param {Object} userId, followingId
  */
- const unfollowUser = (userId, followingId) => {
+const unfollowUser = (userId, followingId) => {
   let userRef = usersCollection.doc(userId);
   userRef.update({
     followings: firebase.firestore.FieldValue.arrayRemove(followingId),
@@ -94,16 +100,28 @@ const getUserData = async id => {
 };
 
 /**
+ *
+ * @param {string} email
+ * @returns data of the user
+ */
+const getUserByEmail = async email => {
+  const user = await usersCollection.where('email', '==', email).get();
+
+  let userInfo = null;
+  if (user.docs.length) {
+    userInfo = user.docs[0].data();
+  }
+
+  return userInfo;
+};
+
+/**
  * @param {string} id
  * @returns followings ids
  */
 const getFollowings = async id => {
   const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        followings: user.followings,
-      }
-    : null;
+  return user ? user.data() : null;
 };
 
 /**
@@ -124,12 +142,15 @@ const getFollowers = async id => {
  * @returns questions of the user
  */
 const getUserQuestions = async id => {
-  const user = await (await usersCollection.doc(id).get()).data();
-  return user
-    ? {
-        questions: user.questions,
-      }
-    : null;
+  const questionsCollection = db.collection('Questions');
+  const questions = await questionsCollection.where('user_id', '==', id).get();
+
+  let questionsData = [];
+  questions.forEach(doc => {
+    questionsData.push(doc.data());
+  });
+
+  return questionsData;
 };
 
 /**
@@ -158,6 +179,7 @@ export {
   unfollowUser,
   getFollowers,
   getFollowings,
+  getUserByEmail,
   updateUserData,
   getUserQuestions,
 };

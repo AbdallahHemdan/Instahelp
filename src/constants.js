@@ -7,6 +7,6 @@ const avatarList = [
 
 const randomIndex = Math.floor(Math.random() * 4) + 1;
 
-export const MAX_NAME_LENGTH = 13;
+export const MAX_NAME_LENGTH = 10;
 export const MAX_SUBTITLE_LENGTH = 16;
 export const AVATAR_URL = avatarList[randomIndex - 1];

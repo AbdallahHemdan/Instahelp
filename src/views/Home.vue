@@ -1,8 +1,8 @@
 <template>
   <div class="home container">
     <div class="home__left">
-      <new-post></new-post>
-      <newsfeed></newsfeed>
+      <new-post :forceRender="forceRender"></new-post>
+      <newsfeed v-if="showNewsFeed"></newsfeed>
     </div>
 
     <div class="home__right">
@@ -12,21 +12,19 @@
 </template>
 
 <script>
-import { getUserData } from './../services/user.service';
-
 export default {
   name: 'Home',
   data: function() {
-    return {};
+    return {
+      showNewsFeed: true,
+    };
   },
   methods: {
-    setUserData() {
-      let userId = localStorage.getItem('user_id');
+    forceRender: function() {
+      this.showNewsFeed = false;
 
-      getUserData(userId).then(data => {
-        localStorage.setItem('user_image', data.image);
-        localStorage.setItem('user_subtitle', data.sub_title);
-        localStorage.setItem('user_description', data.description);
+      this.$nextTick().then(() => {
+        this.showNewsFeed = true;
       });
     },
   },
@@ -35,9 +33,7 @@ export default {
     'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
     'new-post': () => import('./../components/NewPost/NewPost'),
   },
-  mounted() {
-    this.setUserData();
-  },
+  mounted() {},
 };
 </script>
 

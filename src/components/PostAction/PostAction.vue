@@ -71,6 +71,10 @@ export default {
       this.isUpVoted = !this.isUpVoted;
 
       if (this.isUpVoted) {
+        if (this.isDownVoted) {
+          this.likeAction(this.id);
+        }
+
         this.isDownVoted = false;
       }
 
@@ -84,6 +88,10 @@ export default {
       this.isDownVoted = !this.isDownVoted;
 
       if (this.isDownVoted) {
+        if (this.isUpVoted) {
+          this.dislikeAction(this.id);
+        }
+
         this.isUpVoted = false;
       }
 

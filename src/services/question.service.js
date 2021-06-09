@@ -1,6 +1,8 @@
 import firebase from 'firebase';
 import { firebaseApp } from './../main';
 
+import { putTags } from './tag.service';
+
 const db = firebaseApp.firestore();
 
 const questionsCollection = db.collection('Questions');
@@ -24,10 +26,12 @@ const addQuestion = question => {
     timestamp: timestamp(),
   };
 
-  questionsCollection.add(questionData).then(doc => {
+  return questionsCollection.add(questionData).then(doc => {
     questionsCollection.doc(doc.id).update({
       question_id: doc.id,
     });
+
+    putTags(question.tags, doc.id);
   });
 };
 
@@ -47,7 +51,7 @@ const getQuestion = async id => {
  */
 
 const getAllQuestions = async () => {
-  const questions = await questionsCollection.orderBy('timestamp').get();
+  const questions = await questionsCollection.orderBy('timestamp', 'desc').get();
 
   let questionsData = [];
   questions.forEach(question => {

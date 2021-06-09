@@ -170,7 +170,6 @@ export default {
             }
           },
           err => {
-            console.log(err);
             this.errMessage = err.message;
           },
         );
