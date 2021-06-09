@@ -11,6 +11,7 @@ const questionsCollection = db.collection('Questions');
  * @returns {String} id
  */
 const addQuestion = question => {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp;
   let questionData = {
     question_id: '',
     user_id: question.user_id,
@@ -20,6 +21,7 @@ const addQuestion = question => {
     likes: 0,
     comments: [],
     date: new Date().toDateString(),
+    timestamp: timestamp(),
   };
 
   questionsCollection.add(questionData).then(doc => {
@@ -45,7 +47,7 @@ const getQuestion = async id => {
  */
 
 const getAllQuestions = async () => {
-  const questions = await questionsCollection.get();
+  const questions = await questionsCollection.orderBy('timestamp').get();
 
   let questionsData = [];
   questions.forEach(question => {

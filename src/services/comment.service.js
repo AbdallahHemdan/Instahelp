@@ -12,11 +12,13 @@ const commentsCollection = db.collection('Comments');
  * @returns {String} id
  */
 const addComment = comment => {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp;
   let commentData = {
     user_id: comment.user_id,
     content: comment.content,
     question_id: comment.question_id,
     username: comment.username,
+    timestamp: timestamp()
   };
 
   commentsCollection.add(commentData).then(doc => {
@@ -40,7 +42,7 @@ const getComments = async questionId => {
       },
     );
 
-  const comments = await commentsCollection.where('question_id', '==', questionId).get();
+  const comments = await commentsCollection.where('question_id', '==', questionId).orderBy('timestamp').get();
 
   let commentsData = [];
   comments.forEach(comment => {
