@@ -148,28 +148,14 @@ const unfollowUser = (userId, followingId) => {
     });
 };
 
-export { <<
-    <<
-    << < HEAD
+export {
     addUser,
+    followUser,
     getUserData,
-    getFollowings,
-    getFollowers,
-    getUserQuestions,
     updateImage,
+    unfollowUser,
+    getFollowers,
+    getFollowings,
     updateUserData,
-}; ===
-===
-=
-addUser,
-followUser,
-getUserData,
-updateImage,
-unfollowUser,
-getFollowers,
-getFollowings,
-updateUserData,
-getUserQuestions,
-}; >>>
->>>
-> f7846f29826cd9fefde845c4b826d43e140488c8
+    getUserQuestions,
+};
