@@ -42,6 +42,7 @@ export default {
   props: {
     answers: '',
     id: '',
+    forceRender: '',
   },
   computed: {
     answerTyped: function() {
@@ -59,9 +60,11 @@ export default {
         question_id: this.id,
         username: getUsername(),
       };
-
-      addComment(comment);
       this.answerMessage = '';
+
+      addComment(comment).then(res => {
+        this.forceRender();
+      });
     },
     getAllComments: function() {
       getComments(this.id).then(res => {

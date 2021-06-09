@@ -1,8 +1,8 @@
 <template>
   <div class="home container">
     <div class="home__left">
-      <new-post></new-post>
-      <newsfeed></newsfeed>
+      <new-post :forceRender="forceRender"></new-post>
+      <newsfeed v-if="showNewsFeed"></newsfeed>
     </div>
 
     <div class="home__right">
@@ -15,9 +15,19 @@
 export default {
   name: 'Home',
   data: function() {
-    return {};
+    return {
+      showNewsFeed: true,
+    };
   },
-  methods: {},
+  methods: {
+    forceRender: function() {
+      this.showNewsFeed = false;
+
+      this.$nextTick().then(() => {
+        this.showNewsFeed = true;
+      });
+    },
+  },
   components: {
     newsfeed: () => import('./../components/Newsfeed/Newsfeed'),
     'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
