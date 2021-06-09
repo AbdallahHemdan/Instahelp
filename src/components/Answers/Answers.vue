@@ -1,15 +1,15 @@
 <template>
   <div class="answers">
-    <answer v-for="(answer, index) in answers" :key="index" :answer="answer"></answer>
+    <answer v-for="(answer, index) in commentsData" :key="index" :answer="answer"></answer>
 
     <section>
       <form class="answers__leave-answer">
         <textarea
+          ref="answer_ref"
           name="answer"
           placeholder="Add an answer..."
           class="answers__answer-area"
-          :value="answerMessage"
-          @input="update"
+          v-model="answerMessage"
         ></textarea>
         <button
           type="submit"
@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import { addComment, getComments } from './../../services/comment.service.js';
+import { getUserId, getUsername } from './../../utilities/user';
+
 export default {
   name: 'Answers',
   components: {
@@ -33,31 +36,48 @@ export default {
   data: function() {
     return {
       answerMessage: '',
-    }
+      commentsData: '',
+    };
   },
   props: {
-    answers: {
-      type: Array,
-      required: true,
-    },
+    answers: '',
+    id: '',
   },
   computed: {
     answerTyped: function() {
-      return this.answerMessage.length ? true : false
+      return this.answerMessage.length ? true : false;
     },
     processedAnswer: function() {
-      return marked(this.answerMessage, { sanitize: true })
+      return marked(this.answerMessage, { sanitize: true });
     },
   },
   methods: {
-    update: _.debounce(function(e) {
-      this.answerMessage = e.target.value
-    }, 300),
     addAnswer: function() {
-      console.log(this.answerMessage)
+      const comment = {
+        user_id: getUserId(),
+        content: this.answerMessage,
+        question_id: this.id,
+        username: getUsername(),
+      };
+
+      addComment(comment);
+      this.answerMessage = '';
+    },
+    getAllComments: function() {
+      getComments(this.id).then(res => {
+        this.commentsData = res;
+      });
     },
   },
-}
+  mounted() {
+    this.getAllComments();
+  },
+  watch: {
+    id() {
+      this.getAllComments();
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

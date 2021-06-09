@@ -24,7 +24,6 @@ export default {
       let userId = localStorage.getItem('user_id');
 
       getUserData(userId).then(data => {
-        console.log('data.sub_title: ', data.sub_title);
         localStorage.setItem('user_image', data.image);
         localStorage.setItem('user_subtitle', data.sub_title);
         localStorage.setItem('user_description', data.description);

@@ -1,4 +1,4 @@
-import { firebaseApp } from './../main'
+import { firebaseApp } from './../main';
 
 import { addCommentToQuestion } from './question.service';
 
@@ -15,8 +15,9 @@ const addComment = comment => {
   let commentData = {
     user_id: comment.user_id,
     content: comment.content,
-    question_id: comment.question_id
-  }
+    question_id: comment.question_id,
+    username: comment.username,
+  };
 
   commentsCollection.add(commentData).then(doc => {
     addCommentToQuestion(doc.question_id, doc.id);
@@ -29,17 +30,24 @@ const addComment = comment => {
  * @returns {array} comments
  */
 const getComments = async questionId => {
-  const comments = await commentsCollection.where("question_id", "==", questionId).get();
-  
-  let commentsData = []
+  if (!questionId)
+    return new Promise(
+      () => {
+        console.log('accepted');
+      },
+      () => {
+        console.log('error');
+      },
+    );
+
+  const comments = await commentsCollection.where('question_id', '==', questionId).get();
+
+  let commentsData = [];
   comments.forEach(comment => {
-    commentsData.push(comment.data())
-  }) 
+    commentsData.push(comment.data());
+  });
 
   return commentsData;
 };
 
-export {
-  addComment,
-  getComments,
-}
+export { addComment, getComments };

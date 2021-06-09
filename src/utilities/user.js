@@ -14,4 +14,8 @@ const getUserId = () => {
   return localStorage.getItem('user_id');
 };
 
-export { getUserInfo, getUserId };
+const getUsername = () => {
+  return localStorage.getItem('displayName');
+};
+
+export { getUserInfo, getUserId, getUsername };

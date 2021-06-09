@@ -1,6 +1,11 @@
 <template>
-  <div class="newsfeed">
-    <post v-for="(post, index) in questions" :key="index" :post="post" :answers="answers"></post>
+  <div class="newsfeed" v-if="questions.length">
+    <post v-for="(post, index) in questions" :key="index" :post="post"></post>
+  </div>
+  <div class="newsfeed" v-else>
+    <div class="newsfeed__empty-dashboard">
+      You don't have any questions, add questions or follow people in order to get one
+    </div>
   </div>
 </template>
 
@@ -15,17 +20,18 @@ export default {
       questions: '',
     };
   },
-  methods: {},
-  components: {
-    post: () => import('./../Post/Post'),
-  },
-  mounted() {},
-  computed: {
-    async posts() {
-      return getAllQuestions().then(res => {
+  methods: {
+    setAllQuestion: function() {
+      getAllQuestions().then(res => {
         this.questions = res;
       });
     },
+  },
+  components: {
+    post: () => import('./../Post/Post'),
+  },
+  mounted() {
+    this.setAllQuestion();
   },
 };
 </script>
