@@ -105,7 +105,6 @@ const getUserData = async id => {
  * @returns data of the user
  */
 const getUserByEmail = async email => {
-  console.log('email: ', email);
   const user = await usersCollection.where('email', '==', email).get();
 
   let userInfo = null;
@@ -145,11 +144,11 @@ const getFollowers = async id => {
 const getUserQuestions = async id => {
   const questionsCollection = db.collection('Questions');
   const questions = await questionsCollection.where('user_id', '==', id).get();
-  
+
   let questionsData = [];
   questions.forEach(doc => {
     questionsData.push(doc.data());
-  })
+  });
 
   return questionsData;
 };

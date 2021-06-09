@@ -136,20 +136,16 @@ export default {
         .signInWithPopup(provider)
         .then(res => {
           getUserByEmail(res.user.email).then(user => {
-            console.log('user status: ', user);
-
             if (!user) {
               let userData = {
                 email: res.user.email,
                 name: res.user.displayName,
               };
-              console.log('Not exists');
 
               addUser(userData).then(res => {
                 window.location = '/';
               });
             } else {
-              console.log('Already exists');
               localStorage.removeItem('user_id');
               localStorage.removeItem('user_image');
               localStorage.removeItem('displayName');

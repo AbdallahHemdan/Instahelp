@@ -22,8 +22,8 @@ const addComment = comment => {
     timestamp: timestamp(),
   };
 
-  commentsCollection.add(commentData).then(doc => {
-    addCommentToQuestion(doc.question_id, doc.id);
+  return commentsCollection.add(commentData).then(doc => {
+    addCommentToQuestion(commentData.question_id, doc.id);
   });
 };
 
@@ -33,15 +33,7 @@ const addComment = comment => {
  * @returns {array} comments
  */
 const getComments = async questionId => {
-  if (!questionId)
-    return new Promise(
-      () => {
-        console.log('accepted');
-      },
-      () => {
-        console.log('error');
-      },
-    );
+  if (!questionId) return new Promise();
 
   const comments = await commentsCollection
     .where('question_id', '==', questionId)
