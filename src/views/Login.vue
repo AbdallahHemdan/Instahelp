@@ -150,12 +150,13 @@ export default {
               localStorage.removeItem('user_image');
               localStorage.removeItem('displayName');
               localStorage.removeItem('user_subtitle');
-              localStorage.removeItem('user_description');
+              localStorage.removeItem('description');
 
               localStorage.setItem('user_id', user.user_id);
               localStorage.setItem('user_image', user.image_url);
               localStorage.setItem('user_subtitle', user.sub_title);
-              localStorage.setItem('user_description', user.description);
+              localStorage.setItem('description', user.description);
+              localStorage.setItem('displayName', user.name);
               window.location = '/';
             }
           });
