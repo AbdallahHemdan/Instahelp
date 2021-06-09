@@ -100,15 +100,20 @@ export default {};
   flex-flow: row wrap;
   text-align: center;
   padding-top: 40px;
+  text-align: center;
 
   &__card {
     width: 50%;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 700;
     padding: 20px;
+    margin: auto;
   }
   &__social {
     color: $main-color;
+  }
+  @media (max-width: 768px) {
+    display: block;
   }
 }
 .icon {

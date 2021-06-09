@@ -11,19 +11,24 @@ const routes = [
     component: () => import('./../views/Home.vue'),
   },
   {
-    path: '/question/:id',
-    name: 'Question',
-    component: () => import('./../views/Question.vue'),
-  },
-  {
     path: '/tag/:id',
     name: 'Tag',
     component: () => import('./../views/Tag.vue'),
   },
   {
+    path: '/question/:id',
+    name: 'Question',
+    component: () => import('./../views/Question.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('./../views/About.vue'),
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('./../views/Settings.vue'),
   },
   {
     path: '/contact',

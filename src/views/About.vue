@@ -14,6 +14,7 @@
     <img
       src="https://qsf.fs.quoracdn.net/-4-images.static_pages.about.illo_800.png-26-56a917c5d847bcfc.png"
       alt="about image"
+      class="about__photo"
     />
     <div class="about__title">Gather Around a Question</div>
     <div class="about__content">
@@ -42,7 +43,7 @@ export default {};
 <style lang="scss" scoped>
 .about {
   text-align: center;
-  padding: 20px 0 40px 0;
+  padding: 20px 0 20px 0;
 
   &__title {
     font-size: 35px;
@@ -54,6 +55,19 @@ export default {};
     font-size: 20px;
     width: 60%;
     margin: auto;
+  }
+  &__photo {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 10px;
+
+    &__content {
+      width: 100%;
+    }
   }
 }
 </style>

@@ -1,23 +1,34 @@
 <template>
   <div class="follow-item">
-    <img :src="following.image_url" :alt="following.name + 'image'" class="follow-item__icon" />
+    <img
+      :src="following.image"
+      :alt="following.name + 'image'"
+      class="follow-item__icon"
+    />
 
     <div class="follow-item__right">
       <div class="follow-item__info">
-        <div class="follow-item__username">{{ following.name }}</div>
+        <div class="follow-item__username">
+          <a :href="`/profile/${following.user_id}`">
+            {{ following.name }}
+          </a>
+        </div>
         <div class="follow-item__nickname">
           {{ following.sub_title }}
         </div>
       </div>
-
-      <button class="follow-item__cta">Follow</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FollowItem',
+  name: "FollowItem",
+  data() {
+    return {
+      followed: false,
+    };
+  },
   props: {
     following: {
       type: Object,

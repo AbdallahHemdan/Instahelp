@@ -6,6 +6,7 @@
       
     -->
     <profile-header></profile-header>
+    <profile-bottom></profile-bottom>
   </div>
 </template>
 
@@ -14,6 +15,8 @@ export default {
   components: {
     "profile-header": () =>
       import("./../components/ProfileHeader/ProfileHeader"),
+    "profile-bottom": () =>
+      import("./../components/ProfileBottom/ProfileBottom"),
   },
 };
 </script>
