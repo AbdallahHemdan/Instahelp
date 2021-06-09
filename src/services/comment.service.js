@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import { firebaseApp } from './../main';
 
 import { addCommentToQuestion } from './question.service';
@@ -18,7 +19,7 @@ const addComment = comment => {
     content: comment.content,
     question_id: comment.question_id,
     username: comment.username,
-    timestamp: timestamp()
+    timestamp: timestamp(),
   };
 
   commentsCollection.add(commentData).then(doc => {
@@ -42,7 +43,10 @@ const getComments = async questionId => {
       },
     );
 
-  const comments = await commentsCollection.where('question_id', '==', questionId).orderBy('timestamp', 'desc').get();
+  const comments = await commentsCollection
+    .where('question_id', '==', questionId)
+    .orderBy('timestamp')
+    .get();
 
   let commentsData = [];
   comments.forEach(comment => {

@@ -47,7 +47,7 @@ const getQuestion = async id => {
  */
 
 const getAllQuestions = async () => {
-  const questions = await questionsCollection.orderBy('timestamp').get();
+  const questions = await questionsCollection.orderBy('timestamp', 'desc').get();
 
   let questionsData = [];
   questions.forEach(question => {

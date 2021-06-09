@@ -1,7 +1,7 @@
 <template>
   <div class="suggestion">
     <div class="suggestion__left">
-      <a :href="`/profile/${user.id}`" class="suggestion__user">
+      <a :href="`/profile/${user.user_id}`" class="suggestion__user">
         <img
           :src="user.image_url"
           :alt="user.name"
@@ -78,9 +78,10 @@ export default {
 <style lang="scss" scoped>
 .suggestion {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+  width: 300px;
 
   &__left {
     display: flex;
