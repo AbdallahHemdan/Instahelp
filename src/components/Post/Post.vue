@@ -83,14 +83,14 @@
 
 <script>
 import { getUserData } from './../../services/user.service.js';
-import { likeQuestion, dislikeQuestion, getQuestionLikes } from './../../services/question.service';
+import { likeQuestion, dislikeQuestion } from './../../services/question.service';
 
 export default {
   name: 'Post',
   data: function() {
     return {
       userInfo: '',
-      votes: this.post.likes,
+      votes: '',
     };
   },
   methods: {
@@ -103,6 +103,7 @@ export default {
       window.location = `question/${this.post.question_id}`;
     },
     getUserData: function() {
+      this.votes = this.post.likes;
       this.setUseInfo();
     },
     likePost: function() {
