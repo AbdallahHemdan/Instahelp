@@ -1,89 +1,73 @@
 <template>
   <div class="contact-us">
     <div class="contact-us__card">
-      <img
-        src="https://avatars.githubusercontent.com/u/40190772?v=4"
-        alt="avatar"
-        class="avatar"
-      />
+      <img src="https://avatars.githubusercontent.com/u/40190772?v=4" alt="avatar" class="avatar" />
       <div>
         Abdullah Hemdan
       </div>
       <div class="contact-us__social">
         <a href="https://github.com/AbdallahHemdan">
-          <img class="icon" src="../assets/svgs/github.svg" />
+          <img class="icon" src="@/assets/svgs/github.svg" />
         </a>
         <a href="https://www.linkedin.com/in/abdallah-a-hemdan/">
-          <img class="icon" src="../assets/svgs/linkedin.svg" />
+          <img class="icon" src="@/assets/svgs/linkedin.svg" />
         </a>
         <a href="#">
-          <img class="icon" src="../assets/svgs/gmail.svg" />
+          <img class="icon" src="@/assets/svgs/gmail.svg" />
         </a>
       </div>
     </div>
 
     <div class="contact-us__card">
-      <img
-        src="https://avatars.githubusercontent.com/u/44409979?v=4"
-        alt="avatar"
-        class="avatar"
-      />
+      <img src="https://avatars.githubusercontent.com/u/44409979?v=4" alt="avatar" class="avatar" />
       <div>
         Abd-Elrahman Fadl
       </div>
       <div class="contact-us__social">
         <a href="https://github.com/Abdelrhmanfdl">
-          <img class="icon" src="../assets/svgs/github.svg" />
+          <img class="icon" src="@/assets/svgs/github.svg" />
         </a>
         <a href="https://www.linkedin.com/in/abdelrhman-fadl-27756316a/">
-          <img class="icon" src="../assets/svgs/linkedin.svg" />
+          <img class="icon" src="@/assets/svgs/linkedin.svg" />
         </a>
         <a href="#">
-          <img class="icon" src="../assets/svgs/gmail.svg" />
+          <img class="icon" src="@/assets/svgs/gmail.svg" />
         </a>
       </div>
     </div>
 
     <div class="contact-us__card">
-      <img
-        src="https://avatars.githubusercontent.com/u/40351413?v=4"
-        alt="avatar"
-        class="avatar"
-      />
+      <img src="https://avatars.githubusercontent.com/u/40351413?v=4" alt="avatar" class="avatar" />
       <div>
         Adel Rizq
       </div>
       <div class="contact-us__social">
         <a href="https://github.com/AdelRizq">
-          <img class="icon" src="../assets/svgs/github.svg" />
+          <img class="icon" src="@/assets/svgs/github.svg" />
         </a>
         <a href="https://www.linkedin.com/in/adel-rizq/">
-          <img class="icon" src="../assets/svgs/linkedin.svg" />
+          <img class="icon" src="@/assets/svgs/linkedin.svg" />
         </a>
         <a href="#">
-          <img class="icon" src="../assets/svgs/gmail.svg" />
+          <img class="icon" src="@/assets/svgs/gmail.svg" />
         </a>
       </div>
     </div>
 
     <div class="contact-us__card">
-      <img
-        src="https://avatars.githubusercontent.com/u/43186742?v=4"
-        alt="avatar"
-        class="avatar"
-      />
+      <img src="https://avatars.githubusercontent.com/u/43186742?v=4" alt="avatar" class="avatar" />
       <div>
         Ahmed Mahboub
       </div>
       <div class="contact-us__social">
         <a href="https://github.com/Mahboub99">
-          <img class="icon" src="../assets/svgs/github.svg" />
+          <img class="icon" src="@/assets/svgs/github.svg" />
         </a>
         <a href="https://www.linkedin.com/in/ahmed-mahboub/">
-          <img class="icon" src="../assets/svgs/linkedin.svg" />
+          <img class="icon" src="@/assets/svgs/linkedin.svg" />
         </a>
         <a mailto="ahmed.mahboub99@gmail.com">
-          <img class="icon" src="../assets/svgs/gmail.svg" />
+          <img class="icon" src="@/assets/svgs/gmail.svg" />
         </a>
       </div>
     </div>

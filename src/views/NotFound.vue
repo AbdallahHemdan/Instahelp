@@ -19,8 +19,9 @@
     </svg>
 
     <div class="error__message">
-      <h1 class="error__first-message center-text">Are you lost ?</h1>
-      <p class="error__second-message">Sorry, we couldn't find this page</p>
+      <h1 class="error__first-message text-center">Oops!</h1>
+      <h3 class="error__second-message text-center">Looks like you're lost</h3>
+      <p class="error__third-message">We're sorry we couldn't find the page you're looking for.</p>
     </div>
 
     <div class="error__cta-container">
@@ -34,10 +35,10 @@ export default {
   name: 'NotFound',
   methods: {
     directToHome: function() {
-      window.location = '/'
+      window.location = '/';
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -65,22 +66,23 @@ body {
       max-width: 100px;
     }
   }
-
   &__first-message {
-    text-align: center;
-    font-size: 40px;
-    margin-top: 0px;
-    margin-bottom: 4px;
     color: $main-color;
   }
 
   &__second-message {
+    font-size: 28px;
+    margin-top: 0px;
+    margin-bottom: 4px;
+    color: #707070;
+  }
+
+  &__third-message {
     color: $darker-gray;
-    text-align: center;
   }
 
   &__cta-container {
-    margin: 4rem auto 0;
+    margin: 2rem auto 0;
     text-align: center;
   }
 

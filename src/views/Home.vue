@@ -29,9 +29,9 @@ export default {
     },
   },
   components: {
-    newsfeed: () => import('./../components/Newsfeed/Newsfeed'),
-    'user-suggestions': () => import('./../components/UserSuggestions/UserSuggestions'),
-    'new-post': () => import('./../components/NewPost/NewPost'),
+    newsfeed: () => import('@/components/Newsfeed/Newsfeed'),
+    'user-suggestions': () => import('@/components/UserSuggestions/UserSuggestions'),
+    'new-post': () => import('@/components/NewPost/NewPost'),
   },
   mounted() {},
 };

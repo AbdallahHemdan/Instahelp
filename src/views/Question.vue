@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getQuestion } from './../services/question.service';
+import { getQuestion } from '@/services/question.service';
 
 export default {
   name: 'Question',
@@ -23,7 +23,7 @@ export default {
     },
   },
   components: {
-    post: () => import('./../components/Post/Post.vue'),
+    post: () => import('@/components/Post/Post.vue'),
   },
   mounted() {
     this.id = this.$route.params.id;

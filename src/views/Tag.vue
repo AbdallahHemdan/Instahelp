@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { getTagsByName } from './../services/tag.service';
+import { getTagsByName } from '@/services/tag.service';
 
 export default {
   name: 'tag',
@@ -23,7 +23,7 @@ export default {
     },
   },
   components: {
-    post: () => import('./../components/Post/Post.vue'),
+    post: () => import('@/components/Post/Post.vue'),
   },
   mounted() {
     this.id = this.$route.params.id;

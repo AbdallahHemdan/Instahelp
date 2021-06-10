@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import { getUserData, updateImage, updateUserData } from '../services/user.service';
-import { getUserInfo, getUserId } from '../utilities/user';
+import { getUserData, updateImage, updateUserData } from '@/services/user.service';
+import { getUserInfo, getUserId } from '@/utilities/user';
 
 export default {
   data() {

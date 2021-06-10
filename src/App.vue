@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <navbar v-if="!$route.meta.hideNavbar"></navbar>
+    <navbar v-if="showNavbar" />
+
     <main class="container main">
       <router-view />
     </main>
@@ -8,39 +9,26 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import { updateAuthState } from '@/utilities/firebase.js';
 
 export default {
   name: 'app',
-  data: function() {
-    return {
-      user: null,
-    };
-  },
   components: {
-    navbar: () => import('./components/Navbar/Navbar'),
+    navbar: () => import('@/components/Navbar/Navbar'),
   },
-  mounted: function() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user;
-        localStorage.setItem('accessToken', user.uid);
-      } else {
-        this.user = null;
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('displayName');
-      }
-    });
+  computed: {
+    showNavbar() {
+      return !this.$route.meta.hideNavbar;
+    },
+  },
+  mounted() {
+    updateAuthState();
   },
 };
 </script>
 
-<style lang="scss">
-body {
-  background-color: $white-smoke;
-}
-
+<style lang="scss" scoped>
 .main {
-  margin-top: 92px;
+  margin-top: $spacing-10x;
 }
 </style>
