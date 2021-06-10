@@ -43,8 +43,8 @@
 
 <script>
 import { getUserId } from './../../utilities/user';
-import { MAX_NAME_LENGTH, MAX_SUBTITLE_LENGTH } from './../../constants';
-import { followUser, unfollowUser } from './../../services/user.service';
+import { MAX_NAME_LENGTH, MAX_SUBTITLE_LENGTH } from '@/assets/constants/index.js';
+import { followUser, unfollowUser } from '@/services/user.service';
 
 export default {
   name: 'SingleSuggestion',

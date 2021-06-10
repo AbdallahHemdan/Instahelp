@@ -30,7 +30,6 @@ export default {
 <style lang="scss" scoped>
 .header {
   &__title {
-    font-family: 'Pacifico', cursive;
     font-weight: 300;
     color: $main-color;
   }

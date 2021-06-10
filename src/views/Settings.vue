@@ -194,7 +194,6 @@ export default {
       margin-top: -40px;
       opacity: 0;
       color: $main-color;
-      font-family: 'Pacifico', cursive;
       font-weight: 300;
     }
     @media (max-width: 768px) {
@@ -247,7 +246,6 @@ export default {
 
 .header {
   &__title {
-    font-family: 'Pacifico', cursive;
     font-weight: 300;
     color: $main-color;
   }
