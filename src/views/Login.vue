@@ -1,18 +1,10 @@
 <template>
-  <div class="container auth-container">
+  <div class="container c-auth-wrapper">
     <div class="row">
       <left-auth></left-auth>
 
-      <div class="right-col text-center">
-        <div class="header">
-          <a href="/" class="header__link">
-            <h2 class="header__title">Instahelp</h2>
-          </a>
-
-          <p class="header__info">
-            Log In into Instahelp to see photos and videos from your friends.
-          </p>
-        </div>
+      <div class="c-auth-right-col text-center">
+        <auth-header />
 
         <div class="social">
           <button
@@ -23,11 +15,6 @@
             <span class="fa fa-facebook social__logo"></span>
             Login with facebook
           </button>
-
-          <!-- <button type="button" class="btn btn-dark btn-block social__btn" @click="authWithGithub">
-            <span class="fa fa-github social__logo"></span>
-            Login with github
-          </button> -->
 
           <button
             type="button"
@@ -96,11 +83,11 @@
 
 <script>
 import firebase from 'firebase';
-import { addUser, getUserByEmail } from './../services/user.service';
+import { addUser, getUserByEmail } from '@/services/user.service';
 
 export default {
   name: 'Login',
-  data: function() {
+  data() {
     return {
       email: '',
       password: '',
@@ -108,16 +95,17 @@ export default {
     };
   },
   components: {
-    'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
-    'or-divider': () => import('./../components/OrDivider/OrDivider'),
+    'left-auth': () => import('@/components/LeftAuth/LeftAuth'),
+    'or-divider': () => import('@/components/OrDivider/OrDivider'),
+    'auth-header': () => import('@/components/AuthHeader/AuthHeader'),
   },
   methods: {
-    login: function() {
+    login() {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          user => {
+          () => {
             window.location = '/';
           },
           err => {
@@ -129,7 +117,7 @@ export default {
           },
         );
     },
-    authWithGoogle: function() {
+    authWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase
         .auth()
@@ -142,21 +130,24 @@ export default {
                 name: res.user.displayName,
               };
 
-              addUser(userData).then(res => {
+              addUser(userData).then(() => {
                 window.location = '/';
               });
             } else {
+              /**
+               * Update user data in local-storage
+               */
               localStorage.removeItem('user_id');
               localStorage.removeItem('user_image');
+              localStorage.removeItem('description');
               localStorage.removeItem('displayName');
               localStorage.removeItem('user_subtitle');
-              localStorage.removeItem('description');
 
               localStorage.setItem('user_id', user.user_id);
-              localStorage.setItem('user_image', user.image_url);
-              localStorage.setItem('user_subtitle', user.sub_title);
-              localStorage.setItem('description', user.description);
               localStorage.setItem('displayName', user.name);
+              localStorage.setItem('user_image', user.image_url);
+              localStorage.setItem('description', user.description);
+              localStorage.setItem('user_subtitle', user.sub_title);
               window.location = '/';
             }
           });
@@ -165,21 +156,9 @@ export default {
           alert('Oops. ' + err.message);
         });
     },
-    authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
-    },
-    authWithFacebook: function() {
+    authWithFacebook() {
       const provider = new firebase.auth.FacebookAuthProvider();
+
       firebase
         .auth()
         .signInWithPopup(provider)
@@ -189,7 +168,7 @@ export default {
             name: res.user.displayName,
           };
 
-          addUser(userData).then(res => {
+          addUser(userData).then(() => {
             window.location = '/';
           });
         })
@@ -202,62 +181,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
-}
-
-.auth-container {
-  margin-top: 20px;
-
-  .right-col {
-    background-color: $white;
-    border: 1px solid $lighter-gray;
-    width: 400px;
-    float: right;
-    margin: 20px 10px 0px 10px;
-    padding: 40px;
-
-    @media (max-width: 992px) {
-      margin: 20px auto;
-    }
-  }
-}
-
-.header {
-  &__title {
-    font-family: 'Pacifico', cursive;
-    font-weight: 300;
-    color: $main-color;
-  }
-
-  &__link:hover {
-    text-decoration: none;
-  }
-
-  &__info {
-    font-size: 17px;
-    line-height: 25px;
-    color: $dark-gray;
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.social {
-  &__btn {
-    padding: 5px;
-  }
-  &__logo {
-    margin-right: 10px;
-  }
-}
-
 .have-account {
   margin-top: 15px;
 
   &__link {
     padding: 5px;
+    color: $main-color;
+
+    &:hover {
+      color: $sub-color;
+    }
   }
 }
 
@@ -287,20 +220,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-.err-msg {
-  margin-bottom: 1rem;
-  padding: 5px 10px;
-}
-
 .forgot__link {
-  color: $main-color;
-
-  &:hover {
-    color: $sub-color;
-  }
-}
-
-.have-account__link {
   color: $main-color;
 
   &:hover {

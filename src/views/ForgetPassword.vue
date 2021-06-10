@@ -1,20 +1,10 @@
 <template>
-  <div class="container auth-container">
+  <div class="container c-auth-wrapper">
     <div class="row">
       <left-auth></left-auth>
 
-      <div class="right-col text-center">
-        <div class="header">
-          <a href="/" class="header__link">
-            <h2 class="header__title">Instahelp</h2>
-          </a>
-
-          <img src="./../assets/lock.png" alt="lock" class="header__icon" draggable="false" />
-
-          <p class="header__info">
-            Log In into Instahelp to see photos and videos from your friends.
-          </p>
-        </div>
+      <div class="c-auth-right-col text-center">
+        <auth-header :showPasswordLock="true" />
 
         <div
           :class="{
@@ -77,7 +67,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 export default {
   name: 'ForgetPassword',
@@ -86,11 +76,12 @@ export default {
       email: '',
       errMessage: '',
       success: false,
-    }
+    };
   },
   components: {
-    'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
-    'or-divider': () => import('./../components/OrDivider/OrDivider'),
+    'left-auth': () => import('@/components/LeftAuth/LeftAuth'),
+    'or-divider': () => import('@/components/OrDivider/OrDivider'),
+    'auth-header': () => import('@/components/AuthHeader/AuthHeader'),
   },
   methods: {
     forgetPassword: function() {
@@ -98,69 +89,22 @@ export default {
         .auth()
         .sendPasswordResetEmail(this.email)
         .then(user => {
-          this.errMessage = 'Please check your email to reset your password'
-          this.success = true
+          this.errMessage = 'Please check your email to reset your password';
+          this.success = true;
         })
         .catch(err => {
-          this.errMessage = err.message
-          this.success = false
-        })
+          this.errMessage = err.message;
+          this.success = false;
+        });
     },
     handleBackToLogin: function() {
-      window.location = '/login'
+      window.location = '/login';
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
-}
-
-.auth-container {
-  margin-top: 20px;
-
-  .right-col {
-    background-color: $white;
-    border: 1px solid $lighter-gray;
-    width: 400px;
-    float: right;
-    margin: 20px 10px 0px 10px;
-    padding: 40px;
-
-    @media (max-width: 992px) {
-      margin: 20px auto;
-    }
-  }
-}
-
-.header {
-  &__title {
-    font-family: 'Pacifico', cursive;
-    font-weight: 300;
-  }
-
-  &__link:hover {
-    text-decoration: none;
-    color: $main-color;
-  }
-
-  &__icon {
-    height: 70px;
-    margin: 15px auto 0;
-  }
-
-  &__info {
-    font-size: 17px;
-    line-height: 25px;
-    color: $dark-gray;
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
 .have-account {
   margin-top: 15px;
 
@@ -178,11 +122,6 @@ export default {
       padding: 6px;
     }
   }
-}
-
-.err-msg {
-  margin-bottom: 1rem;
-  padding: 5px 10px;
 }
 
 .form-control {

@@ -1,19 +1,11 @@
 <template>
   <div class="login">
-    <div class="container auth-container">
+    <div class="container c-auth-wrapper">
       <div class="row">
         <left-auth></left-auth>
 
-        <div class="right-col text-center">
-          <div class="header">
-            <a href="/" class="header__link">
-              <h2 class="header__title">Instahelp</h2>
-            </a>
-
-            <p class="header__info">
-              Log In into Instahelp to see photos and videos from your friends.
-            </p>
-          </div>
+        <div class="c-auth-right-col text-center">
+          <auth-header />
 
           <div class="social">
             <button
@@ -24,14 +16,7 @@
               <span class="fa fa-facebook social__logo"></span>
               Login with facebook
             </button>
-            <!-- <button
-              type="button"
-              class="btn btn-dark btn-block social__btn"
-              @click="authWithGithub"
-            >
-              <span class="fa fa-github social__logo"></span>
-              Login with github
-            </button> -->
+
             <button
               type="button"
               class="btn btn-danger btn-block social__btn"
@@ -119,25 +104,29 @@
 
 <script>
 import firebase from 'firebase';
-import { addUser } from './../services/user.service';
+import { addUser } from '@/services/user.service';
 
 export default {
   name: 'Signup',
   data: function() {
     return {
-      username: '',
       email: '',
+      username: '',
       password: '',
-      confirmPassword: '',
       errMessage: '',
+      confirmPassword: '',
     };
   },
   components: {
-    'left-auth': () => import('./../components/LeftAuth/LeftAuth'),
-    'or-divider': () => import('./../components/OrDivider/OrDivider'),
+    'left-auth': () => import('@/components/LeftAuth/LeftAuth'),
+    'or-divider': () => import('@/components/OrDivider/OrDivider'),
+    'auth-header': () => import('@/components/AuthHeader/AuthHeader'),
   },
   methods: {
-    signup: function() {
+    signup() {
+      /**
+       * Signup fields validation
+       */
       if (!this.username) {
         this.errMessage = "Username can't be empty";
         return;
@@ -155,7 +144,7 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
-          user => {
+          () => {
             if (firebase.auth().currentUser) {
               firebase
                 .auth()
@@ -174,7 +163,7 @@ export default {
           },
         );
     },
-    authWithGoogle: function() {
+    authWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
 
       firebase
@@ -186,7 +175,7 @@ export default {
             name: res.user.displayName,
           };
 
-          addUser(userData).then(res => {
+          addUser(userData).then(() => {
             window.location = '/';
           });
         })
@@ -194,20 +183,7 @@ export default {
           alert('Oops. ' + err.message);
         });
     },
-    authWithGithub: function() {
-      const provider = new firebase.auth.GithubAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(res) {
-          // redirect to home page
-          window.location = '/';
-        })
-        .catch(function(error) {
-          alert('Oops. ' + error.message);
-        });
-    },
-    authWithFacebook: function() {
+    authWithFacebook() {
       const provider = new firebase.auth.FacebookAuthProvider();
       firebase
         .auth()
@@ -218,7 +194,7 @@ export default {
             name: res.user.displayName,
           };
 
-          addUser(userData).then(res => {
+          addUser(userData).then(() => {
             window.location = '/';
           });
         })
@@ -231,83 +207,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  padding: 0;
-  margin: 0;
+.auth-btn {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 6px;
 }
 
-.auth-container {
-  margin-top: 20px;
+.conditions {
+  color: $dark-gray;
 
-  .right-col {
-    background-color: $white;
-    border: 1px solid $lighter-gray;
-    width: 400px;
-    float: right;
-    margin: 20px 10px 0px 10px;
-    padding: 40px;
-
-    @media (max-width: 992px) {
-      margin: 20px auto;
-    }
+  span {
+    font-weight: 600;
   }
 }
 
-.header {
-  &__title {
-    font-family: 'Pacifico', cursive;
-    font-weight: 300;
-  }
+.have-account {
+  margin-top: 15px;
 
-  &__link:hover {
-    text-decoration: none;
-    color: $main-color;
-  }
-
-  &__info {
-    font-size: 17px;
-    line-height: 25px;
-    color: $dark-gray;
-    margin-bottom: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.social {
-  &__btn {
+  &__link {
     padding: 5px;
-  }
-
-  &__logo {
-    margin-right: 10px;
-  }
-}
-
-.options {
-  .options__first {
-    .auth-btn {
-      margin-top: 30px;
-      margin-bottom: 30px;
-      padding: 6px;
-    }
-  }
-
-  .options__second {
-    .have-account {
-      margin-top: 15px;
-
-      &__link {
-        padding: 5px;
-      }
-    }
-
-    .conditions {
-      color: $dark-gray;
-
-      span {
-        font-weight: 600;
-      }
-    }
   }
 }
 
@@ -319,10 +237,5 @@ export default {
   line-height: 18px;
   min-height: 40px;
   margin-bottom: 1rem;
-}
-
-.err-msg {
-  margin-bottom: 1rem;
-  padding: 5px 10px;
 }
 </style>
