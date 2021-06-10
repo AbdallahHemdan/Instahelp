@@ -1,6 +1,6 @@
-import { firebaseApp } from './../main';
+import { fb } from '@/plugins/firebase.js';
 
-const db = firebaseApp.firestore();
+const db = fb.firestore();
 
 const usersCollection = db.collection('Users');
 

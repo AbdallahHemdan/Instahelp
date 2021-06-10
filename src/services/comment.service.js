@@ -1,9 +1,9 @@
 import firebase from 'firebase';
-import { firebaseApp } from './../main';
+import { fb } from '@/plugins/firebase.js';
 
 import { addCommentToQuestion } from './question.service';
 
-const db = firebaseApp.firestore();
+const db = fb.firestore();
 
 const commentsCollection = db.collection('Comments');
 

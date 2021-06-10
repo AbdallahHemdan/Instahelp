@@ -1,9 +1,9 @@
 import firebase from 'firebase';
-import { firebaseApp } from './../main';
+import { fb } from '@/plugins/firebase.js';
 
 import { putTags } from './tag.service';
 
-const db = firebaseApp.firestore();
+const db = fb.firestore();
 
 const questionsCollection = db.collection('Questions');
 

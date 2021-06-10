@@ -1,10 +1,9 @@
 import firebase from 'firebase';
-import { firebaseApp } from './../main';
-import { AVATAR_URL } from './../constants';
+import { fb } from '@/plugins/firebase.js';
+import { AVATAR_URL } from '@/assets/constants/index';
 
-const storage = firebaseApp.storage().ref();
-
-export const db = firebaseApp.firestore();
+const storage = fb.storage().ref();
+const db = fb.firestore();
 
 const usersCollection = db.collection('Users');
 
@@ -176,6 +175,7 @@ const updateUserData = userData => {
 };
 
 export {
+  db,
   addUser,
   followUser,
   getUserData,

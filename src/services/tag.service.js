@@ -1,8 +1,8 @@
-import { firebaseApp } from './../main';
+import { fb } from '@/plugins/firebase.js';
 
 import { addTagToQuestion } from './question.service';
 
-const db = firebaseApp.firestore();
+const db = fb.firestore();
 
 const tagsCollection = db.collection('Tags');
 
