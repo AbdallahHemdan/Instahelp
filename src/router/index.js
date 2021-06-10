@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isLoggedIn } from '@/auth/index';
+import { isLoggedIn } from '@/utilities/auth';
 
 Vue.use(VueRouter);
 

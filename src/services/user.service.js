@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { fb } from '@/plugins/firebase.js';
-import { AVATAR_URL } from '@/assets/constants/index';
+import { AVATAR_URL } from '@/utilities/constants';
 
 const storage = fb.storage().ref();
 const db = fb.firestore();
