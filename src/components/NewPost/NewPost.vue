@@ -257,7 +257,6 @@ export default {
 
 .main-question__title {
   font-size: $font-size-3x;
-  font-weight: bold;
 }
 
 .main-question__lower {
@@ -343,7 +342,7 @@ hr {
 .post__lower {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   color: $dark-gray;
   line-height: 18px;
   min-height: 56px;

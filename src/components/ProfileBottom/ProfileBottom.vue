@@ -40,7 +40,6 @@ export default {
       getUserQuestions(this.userId).then(res => {
         this.listOfQuestions = res;
       });
-      console.log(this.listOfQuestions);
     },
   },
   mounted() {

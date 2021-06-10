@@ -157,7 +157,6 @@ const getUserQuestions = async id => {
  */
 const updateImage = async (userId, image) => {
   return (await storage.child(userId).put(image)).ref.getDownloadURL().then(url => {
-    console.log(url);
     usersCollection.doc(userId).update({
       image_url: url,
     });

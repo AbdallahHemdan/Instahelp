@@ -145,7 +145,6 @@ export default {
     },
     setUserFollowers: function() {
       getFollowers(this.userId).then(res => {
-        console.log('res: ', res);
         res.followers.forEach(id => {
           getUserData(id).then(follower => {
             this.listOfFollowers.push(follower);
@@ -166,7 +165,6 @@ export default {
       getUserQuestions(this.userId).then(res => {
         this.listOfQuestions = res;
       });
-      console.log(this.listOfQuestions);
     },
     setFollowStatus: function() {
       if (this.myId !== this.userId) {
@@ -324,8 +322,6 @@ export default {
 
 .modal-content {
   border-radius: 12px;
-  width: 400px;
-  height: 400px;
   margin: auto;
 }
 

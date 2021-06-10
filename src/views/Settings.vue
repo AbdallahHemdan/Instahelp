@@ -10,7 +10,7 @@
         @change="changeProfileImage"
       />
       <div class="avatar-container">
-        <img :src="this.image" alt="avatar" class="avatar-container__avatar" @click="upload" />
+        <img :src="this.image" class="avatar-container__avatar" @click="upload" />
         <p class="avatar-container__change-image" @click="upload">
           change
         </p>

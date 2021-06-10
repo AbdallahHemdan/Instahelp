@@ -2,7 +2,7 @@
   <div class="post">
     <div class="post__upper">
       <div class="post__upper-left">
-        <img :src="userInfo.image" alt="owner" class="post__owner-img" draggable="false" />
+        <img :src="userInfo.image" class="post__owner-img" draggable="false" />
 
         <div class="post__header">
           <div class="post__title">
@@ -12,7 +12,7 @@
             </a>
           </div>
 
-          <div class="post__date">Asked: {{ post.date }}</div>
+          <div class="post__date" v-if="post.date">Asked: {{ post.date }}</div>
         </div>
       </div>
 
@@ -126,7 +126,7 @@ export default {
       });
     },
     goToPostPage: function() {
-      window.location = `question/${this.post.question_id}`;
+      window.location = `/question/${this.post.question_id}`;
     },
     getUserData: function() {
       /**
@@ -332,7 +332,6 @@ export default {
 
 .main-question__title {
   font-size: $font-size-3x;
-  font-weight: bold;
 }
 
 .main-question__lower {

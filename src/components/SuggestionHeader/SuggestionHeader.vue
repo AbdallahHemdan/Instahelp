@@ -98,8 +98,6 @@ export default {
 
 .modal-content {
   border-radius: 12px;
-  width: 400px;
-  height: 400px;
   margin: auto;
 }
 
