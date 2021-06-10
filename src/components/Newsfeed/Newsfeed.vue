@@ -4,7 +4,7 @@
   </div>
   <div class="newsfeed" v-else>
     <div class="newsfeed__empty-dashboard">
-      <img src="./../../assets/heart-box-2.svg" alt="empty box" class="empty__icon" />
+      <img src="@/assets/heart-box-2.svg" alt="empty box" class="empty__icon" />
       <div class="empty__message">
         <h1 class="empty__message-header">Hi {{ username }}!</h1>
         <p class="empty__message-subtitle">
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import { getAllQuestions } from './../../services/question.service';
-import { getUsername } from './../../utilities/user';
+import { getAllQuestions } from '@/services/question.service';
+import { getUsername } from '@/utilities/user';
 
 export default {
   name: 'Newsfeed',
@@ -37,7 +37,7 @@ export default {
     },
   },
   components: {
-    post: () => import('./../Post/Post'),
+    post: () => import('@/components/Post/Post'),
   },
   mounted() {
     this.setAllQuestion();

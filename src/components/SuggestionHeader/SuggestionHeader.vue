@@ -1,13 +1,7 @@
 <template>
   <div class="suggestions-header">
     <div class="suggestions-header__title">Suggestions For You</div>
-    <!-- <div
-      class="profile-suggestions nav-container__statistics-item"
-      data-toggle="modal"
-      data-target="#suggestions"
-    >
-      See All
-    </div> -->
+
     <div
       class="modal fade"
       id="suggestions"
@@ -19,6 +13,7 @@
         <div class="modal-content">
           <div class="modal__header">
             <div class="modal__title">Suggestions</div>
+
             <div class="modal__close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </div>
@@ -38,8 +33,8 @@
 </template>
 
 <script>
-import { getUserId } from './../../utilities/user';
-import { getSuggestions } from './../../services/suggestion.service';
+import { getUserId } from '@/utilities/user';
+import { getSuggestions } from '@/services/suggestion.service';
 
 export default {
   name: 'SuggestionsHeader',

@@ -22,8 +22,8 @@ export default {
   },
   computed: {
     likedImg: function() {
-      let liked = require('./../../assets/svgs/liked.svg');
-      let unLiked = require('./../../assets/svgs/unliked.svg');
+      let liked = require('@/assets/svgs/liked.svg');
+      let unLiked = require('@/assets/svgs/unliked.svg');
 
       return this.liked ? liked : unLiked;
     },

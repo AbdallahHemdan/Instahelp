@@ -53,19 +53,19 @@
 </template>
 
 <script>
-import { getUserId } from './../../utilities/user';
-import { getUserInfo } from './../../utilities/user';
-import { addQuestion } from './../../services/question.service';
-import VueTagsInput from '@johmun/vue-tags-input';
+import { getUserId } from '@/utilities/user';
+import { getUserInfo } from '@/utilities/user';
+import { addQuestion } from '@/services/question.service';
 
+import VueTagsInput from '@johmun/vue-tags-input';
 export default {
   name: 'NewPost',
   data: function() {
     return {
-      questionTitle: '',
-      questionDescription: '',
       tag: '',
       tags: [],
+      questionTitle: '',
+      questionDescription: '',
     };
   },
   props: {
@@ -117,9 +117,6 @@ export default {
     },
   },
   mounted() {
-    /**
-     * Handle auto-resizing for text area of the question description
-     */
     this.$nextTick(() => {
       this.$el.setAttribute('style', 'height', `${this.$el.scrollHeight}px`);
     });
@@ -347,7 +344,6 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-items: flex-end;
   color: $dark-gray;
   line-height: 18px;
   min-height: 56px;
@@ -360,7 +356,7 @@ hr {
 .question__tags {
   width: 100%;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 16px;
 }
 
 .ti-input {

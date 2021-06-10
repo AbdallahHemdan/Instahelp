@@ -19,13 +19,14 @@
             </button>
           </span>
         </div>
+
         <div class="title-container__profitional-tital">
           {{ this.userInfo.sub_title }}
         </div>
       </div>
     </div>
 
-    <div class="discritipon-container">
+    <div class="description-container">
       {{ this.userInfo.description }}
     </div>
 
@@ -53,6 +54,7 @@
           <div class="modal-content">
             <div class="modal__header">
               <div class="modal__title">Followers</div>
+
               <div class="modal__close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </div>
@@ -109,36 +111,34 @@
 </template>
 
 <script>
-//import { getUserInfo, getUserId } from "../utilities/user";
 import {
+  followUser,
   getUserData,
   getFollowers,
+  unfollowUser,
   getFollowings,
   getUserQuestions,
-  followUser,
-  unfollowUser,
-} from '../../services/user.service';
-import { getUserInfo, getUserId } from '../../utilities/user';
+} from '@/services/user.service';
+import { getUserId } from '@/utilities/user';
 
 export default {
   data: function() {
     return {
-      myId: getUserId(),
-      userId: window.location.pathname.split('/').pop(),
       userInfo: '',
+      followed: false,
+      myId: getUserId(),
+      followHover: false,
       listOfFollowers: [],
       listOfFollowing: [],
       listOfQuestions: [],
-      followed: false,
-      followHover: false,
+      userId: window.location.pathname.split('/').pop(),
     };
   },
   components: {
-    'follow-item': () => import('./../FollowItem/FollowItem'),
+    'follow-item': () => import('@/components/FollowItem/FollowItem'),
   },
   methods: {
     setUseInfo: function() {
-      // general
       getUserData(this.userId).then(res => {
         this.userInfo = res;
       });
@@ -179,12 +179,10 @@ export default {
       this.setUseInfo();
     },
 
-    follow: function(event) {
+    follow: function() {
       if (this.followed) {
-        //unfollow
         unfollowUser(this.myId, this.userId);
       } else {
-        // follow
         followUser(this.myId, this.userId);
       }
       this.followed = !this.followed;
@@ -192,10 +190,10 @@ export default {
   },
   mounted() {
     this.getUserData();
+    this.setFollowStatus();
+    this.setUserQuestions();
     this.setUserFollowers();
     this.setUserFollowings();
-    this.setUserQuestions();
-    this.setFollowStatus();
   },
 };
 </script>
@@ -205,6 +203,7 @@ export default {
   margin-top: 20px;
   padding-bottom: 20px;
 }
+
 .title-container {
   display: flex;
   flex-flow: row nowrap;
@@ -227,6 +226,7 @@ export default {
       height: 100px;
     }
   }
+
   &__name {
     padding-left: 2rem;
     padding-top: 50px;
@@ -246,6 +246,7 @@ export default {
       margin-bottom: 1rem;
     }
   }
+
   &__profitional-tital {
     color: $darker-gray;
     font-size: 14px;
@@ -257,12 +258,14 @@ export default {
       margin-bottom: 1rem;
     }
   }
+
   @media (max-width: 768px) {
     display: block;
     text-align: center;
   }
 }
-.discritipon-container {
+
+.description-container {
   padding: 20px;
   font-size: 18px;
   width: 80%;

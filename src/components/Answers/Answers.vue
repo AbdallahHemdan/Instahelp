@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import { addComment, getComments } from './../../services/comment.service.js';
-import { getUserId, getUsername } from './../../utilities/user';
+import { addComment, getComments } from '@/services/comment.service.js';
+import { getUserId, getUsername } from '@/utilities/user';
 
 export default {
   name: 'Answers',
   components: {
-    answer: () => import('./../SingleAnswer/SingleAnswer'),
+    answer: () => import('@/components/SingleAnswer/SingleAnswer'),
   },
   data: function() {
     return {

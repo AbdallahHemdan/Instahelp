@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { isLoggedIn } from './../auth/index';
+import { isLoggedIn } from '@/auth/index';
 
 Vue.use(VueRouter);
 
@@ -8,37 +8,37 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('./../views/Home.vue'),
+    component: () => import('@/views/Home.vue'),
   },
   {
     path: '/tag/:id',
     name: 'Tag',
-    component: () => import('./../views/Tag.vue'),
+    component: () => import('@/views/Tag.vue'),
   },
   {
     path: '/question/:id',
     name: 'Question',
-    component: () => import('./../views/Question.vue'),
+    component: () => import('@/views/Question.vue'),
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import('./../views/About.vue'),
+    component: () => import('@/views/About.vue'),
   },
   {
     path: '/settings',
     name: 'Settings',
-    component: () => import('./../views/Settings.vue'),
+    component: () => import('@/views/Settings.vue'),
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: () => import('./../views/ContactUs.vue'),
+    component: () => import('@/views/ContactUs.vue'),
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('./../views/Login.vue'),
+    component: () => import('@/views/Login.vue'),
     meta: {
       hideNavbar: true,
     },
@@ -46,12 +46,12 @@ const routes = [
   {
     path: '/profile/:id',
     name: 'Profile',
-    component: () => import('./../views/Profile.vue'),
+    component: () => import('@/views/Profile.vue'),
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: () => import('./../views/Signup.vue'),
+    component: () => import('@/views/Signup.vue'),
     meta: {
       hideNavbar: true,
     },
@@ -59,7 +59,7 @@ const routes = [
   {
     path: '/forget',
     name: 'ForgetPassword',
-    component: () => import('./../views/ForgetPassword.vue'),
+    component: () => import('@/views/ForgetPassword.vue'),
     meta: {
       hideNavbar: true,
     },
@@ -67,7 +67,7 @@ const routes = [
   {
     path: '*',
     name: 'NotFound',
-    component: () => import('./../views/NotFound.vue'),
+    component: () => import('@/views/NotFound.vue'),
     meta: {
       hideNavbar: true,
     },

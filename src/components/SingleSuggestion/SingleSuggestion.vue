@@ -14,6 +14,7 @@
             {{ user.name.substring(0, MAX_NAME_LENGTH) }}
             {{ user.name.length > MAX_NAME_LENGTH ? '...' : '' }}
           </div>
+
           <span class="suggestion__relation" :title="user.sub_title">
             {{ user.sub_title.substring(0, MAX_SUBTITLE_LENGTH) }}
             {{ user.sub_title.length > MAX_SUBTITLE_LENGTH ? '...' : '' }}
@@ -30,6 +31,7 @@
         @click.prevent="toggleFollowState"
         >Follow</a
       >
+
       <a
         :href="'/' + user.id"
         class="suggestion__follow-link"
@@ -42,7 +44,7 @@
 </template>
 
 <script>
-import { getUserId } from './../../utilities/user';
+import { getUserId } from '@/utilities/user';
 import { MAX_NAME_LENGTH, MAX_SUBTITLE_LENGTH } from '@/assets/constants/index.js';
 import { followUser, unfollowUser } from '@/services/user.service';
 

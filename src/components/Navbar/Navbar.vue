@@ -56,12 +56,12 @@ export default {
           imgSrc: 'https://img.icons8.com/ios/30/000000/about-us-male.png',
         },
       ],
-    }
+    };
   },
   components: {
-    'profile-dropdown': () => import('./../ProfileDropdown/ProfileDropdown'),
+    'profile-dropdown': () => import('@/components/ProfileDropdown/ProfileDropdown'),
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>

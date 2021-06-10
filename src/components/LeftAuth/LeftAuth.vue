@@ -11,11 +11,11 @@ export default {
     return {
       counter: 0,
       listOfImg: [
-        require('./../../assets/GIF/Auth/1.gif'),
-        require('./../../assets/GIF/Auth/2.gif'),
-        require('./../../assets/GIF/Auth/3.gif'),
-        require('./../../assets/GIF/Auth/4.gif'),
-        require('./../../assets/GIF/Auth/5.gif'),
+        require('@/assets/GIF/Auth/1.gif'),
+        require('@/assets/GIF/Auth/2.gif'),
+        require('@/assets/GIF/Auth/3.gif'),
+        require('@/assets/GIF/Auth/4.gif'),
+        require('@/assets/GIF/Auth/5.gif'),
       ],
     };
   },

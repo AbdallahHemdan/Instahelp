@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { getUserId } from './../../utilities/user';
-import { getSuggestions } from './../../services/suggestion.service';
+import { getUserId } from '@/utilities/user';
+import { getSuggestions } from '@/services/suggestion.service';
 
 export default {
   name: 'UserSuggestions',
@@ -34,9 +34,9 @@ export default {
   },
   computed: {},
   components: {
-    'user-info': () => import('./../UserInfo/UserInfo'),
-    'suggestion-header': () => import('./../SuggestionHeader/SuggestionHeader'),
-    'single-suggestion': () => import('./../SingleSuggestion/SingleSuggestion'),
+    'user-info': () => import('@/components/UserInfo/UserInfo'),
+    'suggestion-header': () => import('@/components/SuggestionHeader/SuggestionHeader'),
+    'single-suggestion': () => import('@/components/SingleSuggestion/SingleSuggestion'),
   },
   mounted() {
     this.setUserSuggestions();

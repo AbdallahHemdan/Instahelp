@@ -3,11 +3,14 @@
     <div class="newsfeed" v-if="this.listOfQuestions.length">
       <post v-for="(post, index) in this.listOfQuestions" :key="index" :post="post"></post>
     </div>
+
     <div class="newsfeed" v-else>
       <div class="newsfeed__empty-dashboard">
-        <img src="./../../assets/heart-box-2.svg" alt="empty box" class="empty__icon" />
+        <img src="@/assets/heart-box-2.svg" alt="empty box" class="empty__icon" />
+
         <div class="empty__message">
           <h1 class="empty__message-header">Hi {{ username }}!</h1>
+
           <p class="empty__message-subtitle">
             It looks like you have nothing due today. Add some posts, follow some users. Once you
             do, this page will show you what you need to see.
@@ -19,8 +22,8 @@
 </template>
 
 <script>
-import { getUserQuestions } from '../../services/user.service';
-import { getUsername, getUserId } from '../../utilities/user';
+import { getUsername, getUserId } from '@/utilities/user';
+import { getUserQuestions } from '@/services/user.service';
 
 export default {
   data() {

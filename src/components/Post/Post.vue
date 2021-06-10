@@ -48,7 +48,7 @@
 
     <div class="main-question">
       <div class="main-question__upper">
-        <img src="./../../assets/conversation.png" alt="question icon" class="question-icon" />
+        <img src="@/assets/conversation.png" alt="question icon" class="question-icon" />
 
         <a
           class="main-question__title-wrapper"
@@ -70,7 +70,7 @@
 
     <div class="post__tags">
       <span class="post__tags-title">
-        <img src="./../../assets/tag.png" alt="tag image" class="tag-image" />
+        <img src="@/assets/tag.png" alt="tag image" class="tag-image" />
       </span>
       <vue-tags-input
         v-model="tag"
@@ -105,16 +105,16 @@
 
 <script>
 import VueTagsInput from '@johmun/vue-tags-input';
-import { getUserData } from './../../services/user.service.js';
-import { likeQuestion, dislikeQuestion } from './../../services/question.service';
+import { getUserData } from '@/services/user.service.js';
+import { likeQuestion, dislikeQuestion } from '@/services/question.service';
 
 export default {
   name: 'Post',
   data: function() {
     return {
-      userInfo: '',
-      votes: '',
       tag: '',
+      votes: '',
+      userInfo: '',
       tags: this.filterTags,
       showPostAnswers: true,
     };
@@ -186,7 +186,7 @@ export default {
     this.getUserData();
   },
   watch: {
-    post(newVal, oldVal) {
+    post() {
       this.getUserData();
     },
   },

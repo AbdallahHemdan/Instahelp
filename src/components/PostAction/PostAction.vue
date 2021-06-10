@@ -21,7 +21,7 @@
 
       <a class="post-actions__comment">
         <img
-          src="./../../assets/svgs/comment.svg"
+          src="@/assets/svgs/comment.svg"
           alt="comment"
           class="post-actions__icon"
           draggable="false"
@@ -44,20 +44,20 @@ export default {
   },
   computed: {
     upImg: function() {
-      let liked = require('./../../assets/svgs/up-1.svg');
-      let unLiked = require('./../../assets/svgs/up-2.svg');
+      let liked = require('@/assets/svgs/up-1.svg');
+      let unLiked = require('@/assets/svgs/up-2.svg');
 
       return this.isUpVoted ? liked : unLiked;
     },
     downImg: function() {
-      let liked = require('./../../assets/svgs/down-1.svg');
-      let unLiked = require('./../../assets/svgs/down-2.svg');
+      let liked = require('@/assets/svgs/down-1.svg');
+      let unLiked = require('@/assets/svgs/down-2.svg');
 
       return this.isDownVoted ? liked : unLiked;
     },
     savedImg: function() {
-      let saved = require('./../../assets/svgs/saved.svg');
-      let unSaved = require('./../../assets/svgs/unsaved.svg');
+      let saved = require('@/assets/svgs/saved.svg');
+      let unSaved = require('@/assets/svgs/unsaved.svg');
       return this.saved ? saved : unSaved;
     },
   },

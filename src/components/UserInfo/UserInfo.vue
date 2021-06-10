@@ -9,13 +9,14 @@
 
     <div class="user-names">
       <div class="user-info__username">{{ userInfo.username }}</div>
+
       <span class="user-info__sub-name">{{ userInfo.subtitle }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import { getUserInfo } from './../../utilities/user';
+import { getUserInfo } from '@/utilities/user';
 
 export default {
   name: 'UserInfo',
