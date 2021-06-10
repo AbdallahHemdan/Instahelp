@@ -6,7 +6,7 @@
 
     <div class="newsfeed" v-else>
       <div class="newsfeed__empty-dashboard">
-        <img src="@/assets/heart-box-2.svg" alt="empty box" class="empty__icon" />
+        <img src="@/assets/svgs/box.svg" alt="empty box" class="empty__icon" />
 
         <div class="empty__message">
           <h1 class="empty__message-header">Hi {{ username }}!</h1>

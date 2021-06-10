@@ -159,9 +159,9 @@ export default {
     font-weight: bold;
     letter-spacing: 2px;
     margin-right: 8px;
+    text-decoration: none;
 
     &:hover {
-      text-decoration: none;
       color: $main-color;
     }
   }

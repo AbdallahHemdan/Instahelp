@@ -27,7 +27,6 @@
           >
             <img :src="feature.imgSrc" :alt="feature.title" />
           </a>
-
           <profile-dropdown></profile-dropdown>
         </div>
       </div>
@@ -48,7 +47,7 @@ export default {
         {
           href: '/contact',
           title: 'Contact Us',
-          imgSrc: 'https://img.icons8.com/ios/30/000000/add-contact-to-company.png',
+          imgSrc: 'https://img.icons8.com/ios/30/000000/mobile-email.png',
         },
         {
           href: '/about',

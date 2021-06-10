@@ -45,7 +45,7 @@
 
 <script>
 import { getUserId } from '@/utilities/user';
-import { MAX_NAME_LENGTH, MAX_SUBTITLE_LENGTH } from '@/assets/constants/index.js';
+import { MAX_NAME_LENGTH, MAX_SUBTITLE_LENGTH } from '@/utilities/constants';
 import { followUser, unfollowUser } from '@/services/user.service';
 
 export default {

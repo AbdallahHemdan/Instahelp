@@ -55,11 +55,6 @@ export default {
 
       return this.isDownVoted ? liked : unLiked;
     },
-    savedImg: function() {
-      let saved = require('@/assets/svgs/saved.svg');
-      let unSaved = require('@/assets/svgs/unsaved.svg');
-      return this.saved ? saved : unSaved;
-    },
   },
   props: {
     id: '',
