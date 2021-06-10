@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="description-container">
+    <div class="description-container" v-if="this.userInfo.description">
       {{ this.userInfo.description }}
     </div>
 
@@ -231,6 +231,7 @@ export default {
 
     @media (max-width: 768px) {
       padding-left: 0;
+      padding-top: 20px;
     }
   }
 

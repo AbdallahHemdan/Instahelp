@@ -13,7 +13,7 @@
 
           <p class="empty__message-subtitle">
             It looks like you have nothing due today. Add some posts, follow some users. Once you
-            do, this page will show you what you need to see.
+            do, this section will show you what you need to see.
           </p>
         </div>
       </div>
