@@ -85,8 +85,7 @@
 
               <div class="options__second">
                 <p class="conditions">
-                  By signing up, you agree to <span>our Terms</span>, <span>Data Policy</span> and
-                  <span>Cookies Policy</span>
+                  By signing up, you agree to our Terms, Data Policy and Cookies Policy
                 </p>
 
                 <div class="have-account">
