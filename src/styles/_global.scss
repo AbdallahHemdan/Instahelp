@@ -1,0 +1,34 @@
+body {
+  background-color: $white-smoke;
+}
+
+.c-auth-right-col {
+  float: right;
+  margin: 20px 10px 0px 10px;
+  padding: 40px;
+  width: 400px;
+  border: 1px solid $lighter-gray;
+  background-color: $white;
+
+  @media (max-width: 992px) {
+    margin: 0 auto 20px;
+  }
+}
+
+.c-auth-wrapper {
+  margin-top: -40px;
+}
+
+.c-social {
+  &__btn {
+    padding: 5px;
+  }
+  &__logo {
+    margin-right: 10px;
+  }
+}
+
+.c-err-msg {
+  margin-bottom: 1rem;
+  padding: 5px 10px;
+}

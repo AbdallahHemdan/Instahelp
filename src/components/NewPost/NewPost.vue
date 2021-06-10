@@ -347,7 +347,7 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-items: end;
+  align-items: flex-end;
   color: $dark-gray;
   line-height: 18px;
   min-height: 56px;
