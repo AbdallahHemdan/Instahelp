@@ -100,11 +100,7 @@ $ yarn serve
 
 ![Static__3](https://user-images.githubusercontent.com/40190772/121613158-30d50180-ca5c-11eb-837d-db66672af021.png)
 
-![Static__4](https://user-images.githubusercontent.com/40190772/121613159-316d9800-ca5c-11eb-944e-031469a0427f.png)
-
 ![Static__5](https://user-images.githubusercontent.com/40190772/121613161-32062e80-ca5c-11eb-88d6-c976f6af8f1d.png)
-
-![Static__6](https://user-images.githubusercontent.com/40190772/121613164-33375b80-ca5c-11eb-9d6d-314b6302a357.png)
 
 ![Static__7](https://user-images.githubusercontent.com/40190772/121613167-33cff200-ca5c-11eb-9be1-2943e49c5158.png)
 
