@@ -78,12 +78,14 @@ $ yarn serve
 ### Responsive Screenshots
 
 <div align="center">
-  
-![Responsive__4](https://user-images.githubusercontent.com/40190772/121612744-485fba80-ca5b-11eb-8981-6ef38f7ea890.png)
 
 ![Responsive__1](https://user-images.githubusercontent.com/40190772/121612746-4a297e00-ca5b-11eb-8c6e-535206adb7e8.png)
 
 ![Responsive__2](https://user-images.githubusercontent.com/40190772/121612747-4bf34180-ca5b-11eb-8cfd-cffbae29d92c.png)
+  
+![Responsive__3](https://user-images.githubusercontent.com/40190772/121694317-4c76f100-caca-11eb-913f-8ef84cf0ecfd.png)
+  
+![Responsive__4](https://user-images.githubusercontent.com/40190772/121612744-485fba80-ca5b-11eb-8981-6ef38f7ea890.png)
 
 </div>
 
@@ -98,7 +100,13 @@ $ yarn serve
 
 ![Static__3](https://user-images.githubusercontent.com/40190772/121613158-30d50180-ca5c-11eb-837d-db66672af021.png)
 
+![Static__4](https://user-images.githubusercontent.com/40190772/121695103-079f8a00-cacb-11eb-9ca1-0aa8c7c89a14.png)
+
 ![Static__5](https://user-images.githubusercontent.com/40190772/121613161-32062e80-ca5c-11eb-88d6-c976f6af8f1d.png)
+
+![Static__6](https://user-images.githubusercontent.com/40190772/121695646-87c5ef80-cacb-11eb-86fd-48c5fb64f224.png)
+
+![Static__7](https://user-images.githubusercontent.com/40190772/121695654-898fb300-cacb-11eb-854a-fa248d8354ed.png)
 
 ![Static__8](https://user-images.githubusercontent.com/40190772/121613169-34688880-ca5c-11eb-9760-9ed8b86dde70.png)
 
