@@ -85,8 +85,6 @@ $ yarn serve
 
 ![Responsive__2](https://user-images.githubusercontent.com/40190772/121612747-4bf34180-ca5b-11eb-8cfd-cffbae29d92c.png)
 
-![Responsive__3](https://user-images.githubusercontent.com/40190772/121612750-4c8bd800-ca5b-11eb-967c-1534ff240aaf.png)
-
 </div>
 
 ### Desktop Screenshots
@@ -101,8 +99,6 @@ $ yarn serve
 ![Static__3](https://user-images.githubusercontent.com/40190772/121613158-30d50180-ca5c-11eb-837d-db66672af021.png)
 
 ![Static__5](https://user-images.githubusercontent.com/40190772/121613161-32062e80-ca5c-11eb-88d6-c976f6af8f1d.png)
-
-![Static__7](https://user-images.githubusercontent.com/40190772/121613167-33cff200-ca5c-11eb-9be1-2943e49c5158.png)
 
 ![Static__8](https://user-images.githubusercontent.com/40190772/121613169-34688880-ca5c-11eb-9760-9ed8b86dde70.png)
 
